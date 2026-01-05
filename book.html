@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Book | Mallory Jane Photography</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+</head>
+<body>
+
+<div class="w3-bar w3-white w3-padding w3-card">
+  <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
+    <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:28px;vertical-align:middle;">
+  </a>
+  <div class="w3-right w3-hide-small">
+    <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+    <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+    <a href="book.html" class="w3-bar-item w3-button w3-light-grey w3-round">Book</a>
+  </div>
+</div>
+
+<div class="w3-content w3-padding-large w3-margin-top" style="max-width:1100px">
+  <h2 class="w3-center">Book a Session</h2>
+  <p class="w3-center w3-text-grey">Choose a package to see matching time slots.</p>
+
+  <div class="w3-center w3-margin-bottom">
+    <div class="w3-bar w3-light-grey w3-round">
+      <button class="w3-bar-item w3-button" onclick="selectPackage('carnation')">Carnation</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('peony')">Peony</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('iris')">Iris</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('lily')">Lily</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('orchid')">Orchid</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('headshots')">Headshots</button>
+    </div>
+  </div>
+
+  <div id="cal-inline" class="w3-card w3-round" style="min-height:850px; overflow:auto;"></div>
+</div>
+
+<!-- 1) PASTE YOUR CAL "EMBED SNIPPET GENERATOR" LOADER HERE (once) -->
+<!-- In Cal.com: open any event type → Embed → copy the HTML snippet.
+     Keep the loader/init parts, but remove their inline call, because we’ll call inline dynamically below. -->
+
+<script type="text/javascript">
+  // 2) Replace these with your real Cal links (from each event type)
+  // Example format: "yourusername/event-slug"
+  const CAL_LINKS = {
+    carnation: "YOUR_CAL_LINK_HERE",
+    peony: "YOUR_CAL_LINK_HERE",
+    iris: "YOUR_CAL_LINK_HERE",
+    lily: "YOUR_CAL_LINK_HERE",
+    orchid: "YOUR_CAL_LINK_HERE",
+    headshots: "YOUR_CAL_LINK_HERE"
+  };
+
+  function renderCal(calLink) {
+    // Clear existing embed (helps when switching packages)
+    const el = document.querySelector("#cal-inline");
+    el.innerHTML = "";
+
+    // Cal inline embed (per Cal docs)
+    Cal("inline", {
+      elementOrSelector: "#cal-inline",
+      calLink: calLink
+    });
+  }
+
+  function selectPackage(key) {
+    if (!CAL_LINKS[key]) return;
+    // keep URL hash in sync so Packages page links work
+    window.location.hash = key;
+    renderCal(CAL_LINKS[key]);
+  }
+
+  // On page load: choose based on URL hash (book.html#iris), default carnation
+  window.addEventListener("load", () => {
+    const key = (window.location.hash || "#carnation").replace("#", "");
+    selectPackage(CAL_LINKS[key] ? key : "carnation");
+  });
+</script>
+
+</body>
+</html>
