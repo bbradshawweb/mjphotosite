@@ -4,15 +4,21 @@
   <title>Book | Mallory Jane Photography</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+
+  <!-- W3CSS -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
 <body>
 
+<!-- Top nav -->
 <div class="w3-bar w3-white w3-padding w3-card">
   <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
     <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:28px;vertical-align:middle;">
   </a>
+
   <div class="w3-right w3-hide-small">
     <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
     <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
@@ -20,10 +26,18 @@
   </div>
 </div>
 
+<!-- Mobile nav -->
+<div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
+  <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+  <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+  <a href="book.html" class="w3-bar-item w3-button">Book</a>
+</div>
+
 <div class="w3-content w3-padding-large w3-margin-top" style="max-width:1100px">
   <h2 class="w3-center">Book a Session</h2>
   <p class="w3-center w3-text-grey">Choose a package to see matching time slots.</p>
 
+  <!-- Package selector -->
   <div class="w3-center w3-margin-bottom">
     <div class="w3-bar w3-light-grey w3-round">
       <button class="w3-bar-item w3-button" onclick="selectPackage('carnation')">Carnation</button>
@@ -35,48 +49,104 @@
     </div>
   </div>
 
-  <div id="cal-inline" class="w3-card w3-round" style="min-height:850px; overflow:auto;"></div>
+  <!-- Inline calendar container -->
+  <div id="cal-inline" class="w3-card w3-round" style="width:100%; height:900px; overflow:scroll;"></div>
+
+  <p class="w3-center w3-text-grey w3-small w3-margin-top">
+    If you don’t see a time that works, please email
+    <a href="mailto:hello@malloryjanephotography.com">hello@malloryjanephotography.com</a>.
+  </p>
 </div>
 
-<!-- 1) PASTE YOUR CAL "EMBED SNIPPET GENERATOR" LOADER HERE (once) -->
-<!-- In Cal.com: open any event type → Embed → copy the HTML snippet.
-     Keep the loader/init parts, but remove their inline call, because we’ll call inline dynamically below. -->
-
+<!-- Cal embed loader (only once) -->
 <script type="text/javascript">
-  // 2) Replace these with your real Cal links (from each event type)
-  // Example format: "yourusername/event-slug"
-  const CAL_LINKS = {
-    carnation: "YOUR_CAL_LINK_HERE",
-    peony: "YOUR_CAL_LINK_HERE",
-    iris: "YOUR_CAL_LINK_HERE",
-    lily: "YOUR_CAL_LINK_HERE",
-    orchid: "YOUR_CAL_LINK_HERE",
-    headshots: "YOUR_CAL_LINK_HERE"
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal;
+      let ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement("script")).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === "string") {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar);
+          p(cal, ["initNamespace", namespace]);
+        } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  // Single global init is enough for inline embeds
+  Cal("init", { origin: "https://app.cal.com" });
+</script>
+
+<!-- Package -> event type routing + inline render -->
+<script type="text/javascript">
+  // Map each package to the appropriate Cal event type
+  const PACKAGE_TO_CALLINK = {
+    carnation: "mallory-jane-photo/30min",
+    headshots: "mallory-jane-photo/30min",
+
+    peony: "mallory-jane-photo/45min",
+
+    iris: "mallory-jane-photo/60-minute-session",
+
+    lily: "mallory-jane-photo/90-minute-session",
+    orchid: "mallory-jane-photo/90-minute-session"
   };
 
   function renderCal(calLink) {
-    // Clear existing embed (helps when switching packages)
     const el = document.querySelector("#cal-inline");
     el.innerHTML = "";
 
-    // Cal inline embed (per Cal docs)
+    // Render the inline calendar
     Cal("inline", {
       elementOrSelector: "#cal-inline",
-      calLink: calLink
+      calLink: calLink,
+      config: { layout: "month_view" }
     });
+
+    // UI settings
+    Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
   }
 
-  function selectPackage(key) {
-    if (!CAL_LINKS[key]) return;
-    // keep URL hash in sync so Packages page links work
-    window.location.hash = key;
-    renderCal(CAL_LINKS[key]);
+  function selectPackage(pkgKey) {
+    const calLink = PACKAGE_TO_CALLINK[pkgKey];
+    if (!calLink) return;
+
+    // Keep the URL hash in sync so packages.html links work (book.html#iris)
+    window.location.hash = pkgKey;
+
+    // Render correct event type
+    renderCal(calLink);
+
+    // Optional: visually indicate selected button (simple + safe)
+    document.querySelectorAll(".w3-bar button.w3-button").forEach(btn => {
+      btn.classList.remove("w3-dark-grey");
+    });
+    const map = {
+      carnation: 0, peony: 1, iris: 2, lily: 3, orchid: 4, headshots: 5
+    };
+    const idx = map[pkgKey];
+    const buttons = document.querySelectorAll(".w3-bar button.w3-button");
+    if (buttons[idx]) buttons[idx].classList.add("w3-dark-grey");
   }
 
-  // On page load: choose based on URL hash (book.html#iris), default carnation
+  // Load based on URL hash (book.html#iris), default to carnation
   window.addEventListener("load", () => {
-    const key = (window.location.hash || "#carnation").replace("#", "");
-    selectPackage(CAL_LINKS[key] ? key : "carnation");
+    const pkgKey = (window.location.hash || "#carnation").replace("#", "");
+    selectPackage(PACKAGE_TO_CALLINK[pkgKey] ? pkgKey : "carnation");
   });
 </script>
 
