@@ -89,15 +89,13 @@
 
 <script type="text/javascript">
   /**
-   * IMPORTANT:
-   * The "Package" booking question you created in Cal has an IDENTIFIER (slug)
-   * shown under Advanced -> Booking Questions. Cal prefills fields by identifier via query params. :contentReference[oaicite:2]{index=2}
-   *
-   * If your identifier is not literally "package", update this constant.
+   * This MUST match the identifier exactly (including case) from:
+   * Cal Event Type -> Advanced -> Booking Questions
+   * Cal uses identifiers as the prefill keys. :contentReference[oaicite:2]{index=2}
    */
-  const PACKAGE_FIELD_IDENTIFIER = "package";
+  const PACKAGE_FIELD_IDENTIFIER = "Package";
 
-  // Your Cal event links (base, without query params)
+  // Your Cal event links (paths, not full URLs)
   const CAL_EVENT = {
     min30: "mallory-jane-photo/30min",
     min45: "mallory-jane-photo/45min",
@@ -118,22 +116,20 @@
     orchid: { label: "ORCHID PACKAGE (Proposal / Milestone)", calBase: CAL_EVENT.min90 },
   };
 
-  function buildCalLinkWithPrefill(calBase, packageLabel) {
-    // Prefill the booking question using its identifier as a query param. :contentReference[oaicite:3]{index=3}
-    const sep = calBase.includes("?") ? "&" : "?";
-    const key = encodeURIComponent(PACKAGE_FIELD_IDENTIFIER);
-    const val = encodeURIComponent(packageLabel);
-    return `${calBase}${sep}${key}=${val}`;
-  }
-
-  function renderCal(calLink) {
+  function renderCal(calBase, packageLabel) {
     const el = document.querySelector("#cal-inline");
     el.innerHTML = "";
 
+    // Prefill booking form fields in embeds via `config`. :contentReference[oaicite:3]{index=3}
+    const prefillConfig = {
+      layout: "month_view",
+      [PACKAGE_FIELD_IDENTIFIER]: packageLabel
+    };
+
     Cal("inline", {
       elementOrSelector: "#cal-inline",
-      calLink: calLink,
-      config: { layout: "month_view" }
+      calLink: calBase,
+      config: prefillConfig
     });
 
     Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
@@ -153,7 +149,7 @@
     const pkg = PACKAGES[pkgKey];
     if (!pkg) return;
 
-    // Keep URL hash so your packages.html links work (book.html#iris)
+    // Keep URL hash so packages.html links work (book.html#iris)
     window.location.hash = pkgKey;
 
     // Store selection for confirmation fallback
@@ -164,9 +160,7 @@
 
     highlightSelected(pkgKey);
 
-    // Render correct event type and prefill "Package"
-    const calLink = buildCalLinkWithPrefill(pkg.calBase, pkg.label);
-    renderCal(calLink);
+    renderCal(pkg.calBase, pkg.label);
   }
 
   window.addEventListener("load", () => {
