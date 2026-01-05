@@ -1,73 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Mallory Jane Photography</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <title>Mallory Jane Photography</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
 <body>
 
+<!-- Top nav -->
+<div class="w3-bar w3-white w3-padding w3-card">
+  <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
+    <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:28px;vertical-align:middle;">
+  </a>
+
+  <div class="w3-right w3-hide-small">
+    <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+    <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+    <a href="book.html" class="w3-bar-item w3-button w3-light-grey w3-round">Book</a>
+  </div>
+</div>
+
+<!-- Mobile nav -->
+<div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
+  <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+  <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+  <a href="book.html" class="w3-bar-item w3-button">Book</a>
+</div>
+
 <!-- Header -->
 <header class="w3-display-container w3-content w3-center" style="max-width:1500px">
-  <img class="w3-image" src="/w3images/photographer.jpg" alt="Me" width="1500" height="600">
+  <img class="w3-image" src="assets/hero/home-hero.jpg" alt="Mallory Jane Photography" width="1500" height="600">
+
   <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-text-light-grey w3-center">
     <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge">MALLORY JANE</h1>
     <h5 class="w3-hide-large" style="white-space:nowrap">MALLORY JANE</h5>
     <h3 class="w3-hide-medium w3-hide-small">PHOTOGRAPHY</h3>
   </div>
-  
-  <!-- Navbar (placed at the bottom of the header image) -->
-  <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle w3-hide-small" style="bottom:-16px">
-    <a href="#" class="w3-bar-item w3-button">Home</a>
-    <a href="#portfolio" class="w3-bar-item w3-button">Portfolio</a>
-    <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-  </div>
 </header>
 
-<!-- Navbar on small screens -->
-<div class="w3-center w3-light-grey w3-padding-16 w3-hide-large w3-hide-medium">
-<div class="w3-bar w3-light-grey">
-  <a href="#" class="w3-bar-item w3-button">Home</a>
-  <a href="#portfolio" class="w3-bar-item w3-button">Portfolio</a>
-  <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-</div>
-</div>
 <!-- Page content -->
-<div class="w3-content w3-padding-large w3-margin-top" id="portfolio">
+<div class="w3-content w3-padding-large w3-margin-top">
 
-  <!-- Images (Portfolio) -->
-  <img src="/w3images/ocean.jpg" alt="Ocean" class="w3-image" width="1000" height="500">
-  <img src="/w3images/ocean2.jpg" alt="Ocean II" class="w3-image w3-margin-top" width="1000" height="500">
-  <img src="/w3images/falls2.jpg" alt="Falls" class="w3-image w3-margin-top" width="1000" height="500">
-  <img src="/w3images/mountainskies.jpg" alt="Skies" class="w3-image w3-margin-top" width="1000" height="500">
-  <img src="/w3images/mountains2.jpg" alt="Mountains" class="w3-image w3-margin-top" width="1000" height="500">
-
-  <!-- Contact -->
-  <div class="w3-light-grey w3-padding-large w3-padding-32 w3-margin-top" id="contact">
-    <h3 class="w3-center">Contact</h3>
-    <hr>
-    <p>Placeholder Contact Information Section.</p>
-
-    <form action="/action_page.php" target="_blank">
-      <div class="w3-section">
-        <label>Name</label>
-        <input class="w3-input w3-border" type="text" required name="Name">
-      </div>
-      <div class="w3-section">
-        <label>Email</label>
-        <input class="w3-input w3-border" type="text" required name="Email">
-      </div>
-      <div class="w3-section">
-        <label>Message</label>
-        <input class="w3-input w3-border" required name="Message">
-      </div>
-      <button type="submit" class="w3-button w3-block w3-dark-grey">Send</button>
-    </form><br>
-
+  <div class="w3-center w3-margin-bottom">
+    <p class="w3-large">Natural, timeless photos — couples, families, milestones.</p>
+    <a href="book.html" class="w3-button w3-dark-grey w3-round w3-padding-large">Check Availability</a>
   </div>
 
-<!-- End page content -->
+  <!-- Teaser Gallery -->
+  <h3 class="w3-center">Featured</h3>
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-col m4 s12 w3-margin-bottom">
+      <img src="assets/portfolio/thumbs/photo1.jpg" alt="Portfolio sample 1" class="w3-image w3-round">
+    </div>
+    <div class="w3-col m4 s12 w3-margin-bottom">
+      <img src="assets/portfolio/thumbs/photo2.jpg" alt="Portfolio sample 2" class="w3-image w3-round">
+    </div>
+    <div class="w3-col m4 s12 w3-margin-bottom">
+      <img src="assets/portfolio/thumbs/photo3.jpg" alt="Portfolio sample 3" class="w3-image w3-round">
+    </div>
+  </div>
+
+  <div class="w3-center w3-margin-top">
+    <a href="gallery.html" class="w3-button w3-light-grey w3-round">View Full Gallery</a>
+  </div>
+
+  <!-- Contact (simple for now) -->
+  <div class="w3-light-grey w3-padding-large w3-padding-32 w3-margin-top">
+    <h3 class="w3-center">Contact</h3>
+    <hr>
+    <p class="w3-center">
+      Email: <a href="mailto:hello@malloryjanephotography.com">hello@malloryjanephotography.com</a>
+    </p>
+  </div>
+
 </div>
 
 </body>
