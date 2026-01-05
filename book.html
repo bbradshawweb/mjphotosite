@@ -5,10 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
-
-  <!-- W3CSS -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
 <body>
@@ -87,66 +84,94 @@
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  // Single global init is enough for inline embeds
   Cal("init", { origin: "https://app.cal.com" });
 </script>
 
-<!-- Package -> event type routing + inline render -->
 <script type="text/javascript">
-  // Map each package to the appropriate Cal event type
-  const PACKAGE_TO_CALLINK = {
-    carnation: "mallory-jane-photo/30min",
-    headshots: "mallory-jane-photo/30min",
+  /**
+   * IMPORTANT:
+   * The "Package" booking question you created in Cal has an IDENTIFIER (slug)
+   * shown under Advanced -> Booking Questions. Cal prefills fields by identifier via query params. :contentReference[oaicite:2]{index=2}
+   *
+   * If your identifier is not literally "package", update this constant.
+   */
+  const PACKAGE_FIELD_IDENTIFIER = "package";
 
-    peony: "mallory-jane-photo/45min",
-
-    iris: "mallory-jane-photo/60-minute-session",
-
-    lily: "mallory-jane-photo/90-minute-session",
-    orchid: "mallory-jane-photo/90-minute-session"
+  // Your Cal event links (base, without query params)
+  const CAL_EVENT = {
+    min30: "mallory-jane-photo/30min",
+    min45: "mallory-jane-photo/45min",
+    min60: "mallory-jane-photo/60-minute-session",
+    min90: "mallory-jane-photo/90-minute-session",
   };
+
+  // Package routing (multiple packages can share the same duration/event)
+  const PACKAGES = {
+    carnation: { label: "CARNATION PACKAGE", calBase: CAL_EVENT.min30 },
+    headshots: { label: "HEADSHOTS PACKAGE", calBase: CAL_EVENT.min30 },
+
+    peony: { label: "PEONY PACKAGE", calBase: CAL_EVENT.min45 },
+
+    iris: { label: "IRIS PACKAGE", calBase: CAL_EVENT.min60 },
+
+    lily: { label: "LILY PACKAGE", calBase: CAL_EVENT.min90 },
+    orchid: { label: "ORCHID PACKAGE (Proposal / Milestone)", calBase: CAL_EVENT.min90 },
+  };
+
+  function buildCalLinkWithPrefill(calBase, packageLabel) {
+    // Prefill the booking question using its identifier as a query param. :contentReference[oaicite:3]{index=3}
+    const sep = calBase.includes("?") ? "&" : "?";
+    const key = encodeURIComponent(PACKAGE_FIELD_IDENTIFIER);
+    const val = encodeURIComponent(packageLabel);
+    return `${calBase}${sep}${key}=${val}`;
+  }
 
   function renderCal(calLink) {
     const el = document.querySelector("#cal-inline");
     el.innerHTML = "";
 
-    // Render the inline calendar
     Cal("inline", {
       elementOrSelector: "#cal-inline",
       calLink: calLink,
       config: { layout: "month_view" }
     });
 
-    // UI settings
     Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
   }
 
-  function selectPackage(pkgKey) {
-    const calLink = PACKAGE_TO_CALLINK[pkgKey];
-    if (!calLink) return;
-
-    // Keep the URL hash in sync so packages.html links work (book.html#iris)
-    window.location.hash = pkgKey;
-
-    // Render correct event type
-    renderCal(calLink);
-
-    // Optional: visually indicate selected button (simple + safe)
+  function highlightSelected(pkgKey) {
     document.querySelectorAll(".w3-bar button.w3-button").forEach(btn => {
       btn.classList.remove("w3-dark-grey");
     });
-    const map = {
-      carnation: 0, peony: 1, iris: 2, lily: 3, orchid: 4, headshots: 5
-    };
-    const idx = map[pkgKey];
+    const order = ["carnation","peony","iris","lily","orchid","headshots"];
+    const idx = order.indexOf(pkgKey);
     const buttons = document.querySelectorAll(".w3-bar button.w3-button");
-    if (buttons[idx]) buttons[idx].classList.add("w3-dark-grey");
+    if (idx >= 0 && buttons[idx]) buttons[idx].classList.add("w3-dark-grey");
   }
 
-  // Load based on URL hash (book.html#iris), default to carnation
+  function selectPackage(pkgKey) {
+    const pkg = PACKAGES[pkgKey];
+    if (!pkg) return;
+
+    // Keep URL hash so your packages.html links work (book.html#iris)
+    window.location.hash = pkgKey;
+
+    // Store selection for confirmation fallback
+    try {
+      localStorage.setItem("mj_selected_package_key", pkgKey);
+      localStorage.setItem("mj_selected_package_label", pkg.label);
+    } catch (e) {}
+
+    highlightSelected(pkgKey);
+
+    // Render correct event type and prefill "Package"
+    const calLink = buildCalLinkWithPrefill(pkg.calBase, pkg.label);
+    renderCal(calLink);
+  }
+
   window.addEventListener("load", () => {
     const pkgKey = (window.location.hash || "#carnation").replace("#", "");
-    selectPackage(PACKAGE_TO_CALLINK[pkgKey] ? pkgKey : "carnation");
+    selectPackage(PACKAGES[pkgKey] ? pkgKey : "carnation");
   });
 </script>
 
