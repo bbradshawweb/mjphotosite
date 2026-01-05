@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Confirmed | Mallory Jane Photography</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+</head>
+<body>
+
+<!-- Top nav -->
+<div class="w3-bar w3-white w3-padding w3-card">
+  <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
+    <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:28px;vertical-align:middle;">
+  </a>
+
+  <div class="w3-right w3-hide-small">
+    <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+    <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+    <a href="book.html" class="w3-bar-item w3-button w3-light-grey w3-round">Book</a>
+  </div>
+</div>
+
+<div class="w3-content w3-padding-large w3-margin-top" style="max-width:900px">
+  <div class="w3-card w3-round w3-padding-large">
+    <h2 class="w3-center">You’re Booked 🎉</h2>
+    <p class="w3-center w3-text-grey">
+      A confirmation email should arrive shortly with your exact time/location details.
+      If you don’t see it, check spam/junk.
+    </p>
+
+    <hr>
+
+    <h3>Booking details</h3>
+
+    <div class="w3-responsive">
+      <table class="w3-table w3-bordered">
+        <tr>
+          <td><b>Package</b></td>
+          <td id="detail-package">—</td>
+        </tr>
+        <tr>
+          <td><b>Name</b></td>
+          <td id="detail-name">—</td>
+        </tr>
+        <tr>
+          <td><b>Email</b></td>
+          <td id="detail-email">—</td>
+        </tr>
+        <tr>
+          <td><b>Date / Time</b></td>
+          <td id="detail-datetime">—</td>
+        </tr>
+        <tr>
+          <td><b>Timezone</b></td>
+          <td id="detail-timezone">—</td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="w3-text-grey w3-small w3-margin-top" id="detail-note"></p>
+
+    <div class="w3-center w3-margin-top">
+      <a href="packages.html" class="w3-button w3-light-grey w3-round w3-margin-right">View Packages</a>
+      <a href="index.html" class="w3-button w3-dark-grey w3-round">Back Home</a>
+    </div>
+
+    <div class="w3-light-grey w3-round w3-padding w3-margin-top">
+      <h4>What happens next?</h4>
+      <ul>
+        <li>I’ll reach out if we need to confirm location/timing details.</li>
+        <li>You’ll receive an online gallery link after editing is complete.</li>
+        <li>Questions? Email <a href="mailto:hello@malloryjanephotography.com">hello@malloryjanephotography.com</a>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  // If your Cal booking question identifier is different, update this too.
+  const PACKAGE_FIELD_IDENTIFIER = "package";
+
+  const qs = new URLSearchParams(window.location.search);
+
+  // Package: prefer query param; fallback to localStorage from book.html
+  const pkgFromQuery = qs.get(PACKAGE_FIELD_IDENTIFIER);
+  let pkg = pkgFromQuery;
+  try {
+    if (!pkg) pkg = localStorage.getItem("mj_selected_package_label");
+  } catch (e) {}
+
+  // Cal may pass different param names depending on configuration.
+  const name =
+    qs.get("name") ||
+    qs.get("fullName") ||
+    qs.get("attendeeName") ||
+    "";
+
+  const email =
+    qs.get("email") ||
+    qs.get("attendeeEmail") ||
+    "";
+
+  const tz =
+    qs.get("timezone") ||
+    qs.get("tz") ||
+    "";
+
+  // Some systems pass startDate in ISO; we’ll try to format if present.
+  const startRaw =
+    qs.get("startDate") ||
+    qs.get("startTime") ||
+    qs.get("start") ||
+    "";
+
+  function formatDateTime(raw) {
+    if (!raw) return "";
+    const d = new Date(raw);
+    if (isNaN(d.getTime())) return raw; // if it's not ISO, just show raw
+    return d.toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
+  }
+
+  document.getElementById("detail-package").textContent = pkg || "—";
+  document.getElementById("detail-name").textContent = name || "—";
+  document.getElementById("detail-email").textContent = email || "—";
+  document.getElementById("detail-datetime").textContent = formatDateTime(startRaw) || "—";
+  document.getElementById("detail-timezone").textContent = tz || "—";
+
+  // If Cal doesn’t forward details, explain why gracefully
+  const noteEl = document.getElementById("detail-note");
+  if (!pkgFromQuery && !name && !email && !startRaw) {
+    noteEl.textContent =
+      "Note: Some booking details may only appear in your confirmation email (depending on what Cal forwards on redirect).";
+  } else {
+    noteEl.textContent = "";
+  }
+</script>
+
+</body>
+</html>
