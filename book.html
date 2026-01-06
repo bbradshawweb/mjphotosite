@@ -4,13 +4,12 @@
   <title>Book | Mallory Jane Photography</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
 
-<!-- Top nav -->
 <div class="w3-bar w3-white w3-padding w3-card">
   <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
     <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:28px;vertical-align:middle;">
@@ -23,7 +22,6 @@
   </div>
 </div>
 
-<!-- Mobile nav -->
 <div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
   <a href="index.html" class="w3-bar-item w3-button">Home</a>
   <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
@@ -31,7 +29,7 @@
 </div>
 
 <div class="w3-content w3-padding-large w3-margin-top" style="max-width:1100px">
-  <h2 class="w3-center">Book a Session</h2>
+  <h2 class="w3-center mj-section-title">Book a Session</h2>
   <p class="w3-center w3-text-grey">Choose a package to see matching time slots.</p>
 
   <div class="w3-center w3-margin-bottom">
@@ -46,11 +44,16 @@
     </div>
   </div>
 
+  <!-- Package description above calendar -->
+  <div class="w3-panel w3-light-grey w3-round w3-padding" id="packageBlurb">
+    <!-- filled by JS -->
+  </div>
+
   <div id="cal-inline" class="w3-card w3-round" style="width:100%; height:900px; overflow:scroll;"></div>
 
   <p class="w3-center w3-text-grey w3-small w3-margin-top">
-    If you don’t see a time that works, please email
-    <a href="mailto:hello@malloryjanephotography.com">hello@malloryjanephotography.com</a>.
+    If you don’t see a time that works, email
+    <a href="mailto:mal.jane.photography@gmail.com">mal.jane.photography@gmail.com</a>.
   </p>
 </div>
 
@@ -97,17 +100,68 @@
   };
 
   const PACKAGES = {
-    carnation:     { label: "CARNATION PACKAGE", calBase: CAL_EVENT.min30 },
-    headshots:     { label: "HEADSHOTS PACKAGE", calBase: CAL_EVENT.min30 },
-
-    peony:         { label: "PEONY PACKAGE", calBase: CAL_EVENT.min45 },
-
-    iris:          { label: "IRIS PACKAGE", calBase: CAL_EVENT.min60 },
-
-    lily:          { label: "LILY PACKAGE", calBase: CAL_EVENT.min90 },
-    orchid:        { label: "ORCHID PACKAGE (Proposal / Milestone)", calBase: CAL_EVENT.min90 },
-
-    "special-event": { label: "SPECIAL EVENT (Dance Package) — Quote", calBase: CAL_EVENT.min90 }
+    carnation: {
+      label: "CARNATION PACKAGE",
+      calBase: CAL_EVENT.min30,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Carnation — $150</h3>
+        <p><b>30 minutes</b> • 1 location • Online gallery • <b>At least 12 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: couples, quick family updates, announcements</p>
+      `
+    },
+    peony: {
+      label: "PEONY PACKAGE",
+      calBase: CAL_EVENT.min45,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Peony — $200</h3>
+        <p><b>45 minutes</b> • 1 location • Online gallery • <b>At least 20 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: families with kids, couples who want more variety without a full hour</p>
+      `
+    },
+    iris: {
+      label: "IRIS PACKAGE",
+      calBase: CAL_EVENT.min60,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Iris — $250</h3>
+        <p><b>60 minutes</b> • 1 location (or 2 close/walkable spots) • Online gallery • <b>At least 28 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: family pictures, couples that want a mix of variety and quality</p>
+      `
+    },
+    lily: {
+      label: "LILY PACKAGE",
+      calBase: CAL_EVENT.min90,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Lily — $350</h3>
+        <p><b>90 minutes</b> • 2 locations (within ~10–15 miles) • Online gallery • <b>At least 40 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: those that want more personalization, variety, and keepsakes</p>
+      `
+    },
+    orchid: {
+      label: "ORCHID PACKAGE (Proposal / Milestone)",
+      calBase: CAL_EVENT.min90,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Orchid — $575</h3>
+        <p><b>Up to 90 minutes</b> • Planning assistance • Online gallery • <b>At least 45 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: proposals, anniversaries, engagements, milestone moments</p>
+      `
+    },
+    headshots: {
+      label: "HEADSHOTS PACKAGE",
+      calBase: CAL_EVENT.min30,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Headshots — $150</h3>
+        <p><b>30 minutes</b> • Up to 2 outfits • 1 location • Online gallery • <b>At least 12 edited photos (often more)</b></p>
+      `
+    },
+    "special-event": {
+      label: "SPECIAL EVENT (Dance Package) — Quote",
+      calBase: CAL_EVENT.min90,
+      blurbHtml: `
+        <h3 class="mj-section-title" style="margin-top:0;">Special Event (Dance) — Quote</h3>
+        <p><b>Default time is 90 minutes</b>, but you can reach out to me for a quote for your event.</p>
+        <p class="w3-text-grey">Prices vary by party size and time.</p>
+      `
+    }
   };
 
   function renderCal(calBase, packageLabel) {
@@ -146,6 +200,9 @@
     } catch (e) {}
 
     highlightSelected(pkgKey);
+
+    document.getElementById("packageBlurb").innerHTML = pkg.blurbHtml;
+
     renderCal(pkg.calBase, pkg.label);
   }
 
@@ -154,6 +211,28 @@
     selectPackage(PACKAGES[pkgKey] ? pkgKey : "carnation");
   });
 </script>
+
+<!-- CONTACT FOOTER -->
+<footer class="w3-container w3-dark-grey w3-center w3-padding-32 mj-footer">
+  <h3 class="mj-section-title">Contact Me</h3>
+  <p>
+    <a class="w3-text-white" href="mailto:mal.jane.photography@gmail.com">mal.jane.photography@gmail.com</a>
+  </p>
+
+  <div class="mj-social">
+    <a href="https://www.facebook.com/profile.php?id=61570271263678" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5A3.5 3.5 0 0 1 14.2 6h2.3v3h-2.3c-.7 0-1.2.6-1.2 1.3V12H17l-.5 3h-3v7A10 10 0 0 0 22 12z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/mallory.jane_photography/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 12 3.5 3.5 0 0 0 12 10.5zM18 6.8a1.2 1.2 0 1 1-1.2 1.2A1.2 1.2 0 0 1 18 6.8z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
 
 </body>
 </html>
