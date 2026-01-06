@@ -4,9 +4,17 @@
   <title>Mallory Jane Photography</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+
+  <style>
+    /* Makes carousel images consistent */
+    .mj-carousel img {
+      width: 100%;
+      max-height: 720px;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
 
@@ -17,66 +25,162 @@
   </a>
 
   <div class="w3-right w3-hide-small">
-    <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+    <a href="index.html" class="w3-bar-item w3-button w3-light-grey w3-round">Home</a>
     <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
-    <a href="book.html" class="w3-bar-item w3-button w3-light-grey w3-round">Book</a>
+    <a href="book.html" class="w3-bar-item w3-button">Book</a>
   </div>
 </div>
 
 <!-- Mobile nav -->
 <div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
-  <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+  <a href="index.html" class="w3-bar-item w3-button w3-light-grey">Home</a>
   <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
   <a href="book.html" class="w3-bar-item w3-button">Book</a>
 </div>
 
-<!-- Header -->
-<header class="w3-display-container w3-content w3-center" style="max-width:1500px">
-  <img class="w3-image" src="assets/hero/home-hero.jpg" alt="Mallory Jane Photography" width="1500" height="600">
+<!-- CAROUSEL -->
+<div class="w3-content mj-carousel" style="max-width:1500px">
+  <div class="w3-display-container">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel1.jpg" alt="Carousel 1" loading="eager">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel2.jpg" alt="Carousel 2" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel3.jpg" alt="Carousel 3" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel4.jpg" alt="Carousel 4" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel5.jpg" alt="Carousel 5" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel6.jpg" alt="Carousel 6" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel7.jpg" alt="Carousel 7" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel8.jpg" alt="Carousel 8" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel9.jpg" alt="Carousel 9" style="display:none" loading="lazy">
+    <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel10.jpg" alt="Carousel 10" style="display:none" loading="lazy">
 
-  <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-text-light-grey w3-center">
-    <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge">MALLORY JANE</h1>
-    <h5 class="w3-hide-large" style="white-space:nowrap">MALLORY JANE</h5>
-    <h3 class="w3-hide-medium w3-hide-small">PHOTOGRAPHY</h3>
+    <div class="w3-display-middle w3-center w3-padding-large w3-border w3-wide w3-text-light-grey">
+      <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge">MALLORY JANE</h1>
+      <h5 class="w3-hide-large" style="white-space:nowrap">MALLORY JANE</h5>
+      <h3 class="w3-hide-medium w3-hide-small">PHOTOGRAPHY</h3>
+      <div class="w3-margin-top">
+        <a href="book.html" class="w3-button w3-dark-grey w3-round w3-padding-large">Check Availability</a>
+      </div>
+    </div>
   </div>
-</header>
+</div>
 
-<!-- Page content -->
-<div class="w3-content w3-padding-large w3-margin-top">
+<!-- FULL-WIDTH BANNER -->
+<div class="w3-container w3-dark-grey w3-center w3-padding-32">
+  <h2 style="margin:0;">Making Memories since 2016</h2>
+</div>
 
-  <div class="w3-center w3-margin-bottom">
-    <p class="w3-large">Natural, timeless photos — couples, families, milestones.</p>
-    <a href="book.html" class="w3-button w3-dark-grey w3-round w3-padding-large">Check Availability</a>
-  </div>
+<!-- ABOUT ME -->
+<div class="w3-content w3-padding-large" style="max-width:1100px">
+  <h2 class="w3-center w3-margin-top">About Me</h2>
 
-  <!-- Teaser Gallery -->
-  <h3 class="w3-center">Featured</h3>
   <div class="w3-row-padding w3-margin-top">
     <div class="w3-col m4 s12 w3-margin-bottom">
-      <img src="assets/portfolio/thumbs/photo1.jpg" alt="Portfolio sample 1" class="w3-image w3-round">
+      <img src="assets/portfolio/full/AboutMe.jpg" alt="About Mallory" class="w3-image w3-round" loading="lazy">
     </div>
-    <div class="w3-col m4 s12 w3-margin-bottom">
-      <img src="assets/portfolio/thumbs/photo2.jpg" alt="Portfolio sample 2" class="w3-image w3-round">
-    </div>
-    <div class="w3-col m4 s12 w3-margin-bottom">
-      <img src="assets/portfolio/thumbs/photo3.jpg" alt="Portfolio sample 3" class="w3-image w3-round">
+
+    <div class="w3-col m8 s12">
+      <p class="w3-large">
+        Hi, my name is Mallory. I know the chaos of photoshoots better than anyone, which is why I make it as simple as possible to plan, book, shoot, and capture your memories, start to finish. I am passionate about the outdoors, movies, dogs, and babies (in that order). I love meeting new people, hearing and living their unique experiences—I live for it.
+      </p>
+
+      <a href="packages.html" class="w3-button w3-light-grey w3-round">View Packages</a>
+      <a href="book.html" class="w3-button w3-dark-grey w3-round w3-margin-left">Book Now</a>
     </div>
   </div>
-
-  <div class="w3-center w3-margin-top">
-    <a href="gallery.html" class="w3-button w3-light-grey w3-round">View Full Gallery</a>
-  </div>
-
-  <!-- Contact (simple for now) -->
-  <div class="w3-light-grey w3-padding-large w3-padding-32 w3-margin-top">
-    <h3 class="w3-center">Contact</h3>
-    <hr>
-    <p class="w3-center">
-      Email: <a href="mailto:hello@malloryjanephotography.com">hello@malloryjanephotography.com</a>
-    </p>
-  </div>
-
 </div>
+
+<!-- QUICK LINKS -->
+<div class="w3-container w3-light-grey w3-padding-32">
+  <div class="w3-content" style="max-width:1100px">
+    <h2 class="w3-center">Quick Links</h2>
+    <p class="w3-center w3-text-grey">Tap a package to jump straight to booking.</p>
+
+    <div class="w3-row-padding w3-margin-top">
+      <!-- Row 1 -->
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#carnation" class="w3-display-container">
+          <img src="assets/portfolio/full/Carnation%20Package.jpg" alt="Carnation Package" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Carnation</div>
+        </a>
+      </div>
+
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#peony" class="w3-display-container">
+          <img src="assets/portfolio/full/Peony%20Package.jpg" alt="Peony Package" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Peony</div>
+        </a>
+      </div>
+
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#iris" class="w3-display-container">
+          <img src="assets/portfolio/full/Iris%20Package.jpg" alt="Iris Package" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Iris</div>
+        </a>
+      </div>
+
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#lily" class="w3-display-container">
+          <img src="assets/portfolio/full/Lily%20Package.jpg" alt="Lily Package" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Lily</div>
+        </a>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#orchid" class="w3-display-container">
+          <img src="assets/portfolio/full/Orchid%20Package.jpg" alt="Orchid Package" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Orchid</div>
+        </a>
+      </div>
+
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#headshots" class="w3-display-container">
+          <img src="assets/portfolio/full/Headshots%20Package.jpg" alt="Headshots Package" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Headshots</div>
+        </a>
+      </div>
+
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="book.html#special-event" class="w3-display-container">
+          <img src="assets/portfolio/full/Dance%20Package.jpg" alt="Dance Package (Special Event)" class="w3-image w3-round" loading="lazy">
+          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Dance / Special Event</div>
+        </a>
+      </div>
+
+      <!-- Spacer / optional extra tile -->
+      <div class="w3-col l3 m6 s12 w3-margin-bottom">
+        <a href="packages.html" class="w3-display-container">
+          <div class="w3-card w3-round w3-center w3-padding-32 w3-white" style="height:100%;">
+            <h3>See All Details</h3>
+            <p class="w3-text-grey">Packages, add-ons, prints</p>
+            <span class="w3-button w3-dark-grey w3-round">Packages</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Contact/footer -->
+<div class="w3-container w3-dark-grey w3-center w3-padding-24">
+  <p style="margin:0;">
+    Questions? Email <a href="mailto:hello@malloryjanephotography.com" class="w3-text-white">hello@malloryjanephotography.com</a>
+  </p>
+</div>
+
+<script>
+  // Auto-rotating carousel
+  let mjSlideIndex = 0;
+  function mjCarousel() {
+    const slides = document.getElementsByClassName("mySlides");
+    for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+    mjSlideIndex++;
+    if (mjSlideIndex > slides.length) mjSlideIndex = 1;
+    slides[mjSlideIndex - 1].style.display = "block";
+    setTimeout(mjCarousel, 3500); // 3.5s per slide
+  }
+  mjCarousel();
+</script>
 
 </body>
 </html>
