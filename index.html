@@ -6,15 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-
-  <style>
-    /* Makes carousel images consistent */
-    .mj-carousel img {
-      width: 100%;
-      max-height: 720px;
-      object-fit: cover;
-    }
-  </style>
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
 
@@ -53,9 +45,9 @@
     <img class="mySlides w3-animate-opacity" src="assets/portfolio/full/carousel/Carousel10.jpg" alt="Carousel 10" style="display:none" loading="lazy">
 
     <div class="w3-display-middle w3-center w3-padding-large w3-border w3-wide w3-text-light-grey">
-      <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge">MALLORY JANE</h1>
-      <h5 class="w3-hide-large" style="white-space:nowrap">MALLORY JANE</h5>
-      <h3 class="w3-hide-medium w3-hide-small">PHOTOGRAPHY</h3>
+      <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge mj-section-title">MALLORY JANE</h1>
+      <h5 class="w3-hide-large mj-section-title" style="white-space:nowrap">MALLORY JANE</h5>
+      <h3 class="w3-hide-medium w3-hide-small mj-section-title">PHOTOGRAPHY</h3>
       <div class="w3-margin-top">
         <a href="book.html" class="w3-button w3-dark-grey w3-round w3-padding-large">Check Availability</a>
       </div>
@@ -65,12 +57,12 @@
 
 <!-- FULL-WIDTH BANNER -->
 <div class="w3-container w3-dark-grey w3-center w3-padding-32">
-  <h2 style="margin:0;">Making Memories since 2016</h2>
+  <h2 class="mj-section-title" style="margin:0;">Making Memories since 2016</h2>
 </div>
 
 <!-- ABOUT ME -->
 <div class="w3-content w3-padding-large" style="max-width:1100px">
-  <h2 class="w3-center w3-margin-top">About Me</h2>
+  <h2 class="w3-center mj-section-title w3-margin-top">About Me</h2>
 
   <div class="w3-row-padding w3-margin-top">
     <div class="w3-col m4 s12 w3-margin-bottom">
@@ -88,85 +80,146 @@
   </div>
 </div>
 
-<!-- QUICK LINKS -->
+<!-- PACKAGE HERO SECTIONS -->
 <div class="w3-container w3-light-grey w3-padding-32">
   <div class="w3-content" style="max-width:1100px">
-    <h2 class="w3-center">Quick Links</h2>
-    <p class="w3-center w3-text-grey">Tap a package to jump straight to booking.</p>
+    <h2 class="w3-center mj-section-title">Packages</h2>
+    <p class="w3-center w3-text-grey">Choose a package below to jump straight to booking.</p>
 
-    <div class="w3-row-padding w3-margin-top">
-      <!-- Row 1 -->
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#carnation" class="w3-display-container">
-          <img src="assets/portfolio/full/Carnation%20Package.jpg" alt="Carnation Package" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Carnation</div>
-        </a>
+    <!-- PEONY (image left, text right) -->
+    <h3 class="w3-center mj-section-title w3-margin-top"><b>PEONY PACKAGE</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Peony%20Package.jpg" alt="Peony Package">
       </div>
-
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#peony" class="w3-display-container">
-          <img src="assets/portfolio/full/Peony%20Package.jpg" alt="Peony Package" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Peony</div>
-        </a>
+      <div class="w3-col m6 s12">
+        <p><b>$200 • 45 minutes</b></p>
+        <p>1 location • Online gallery • <b>At least 20 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: families with kids, couples who want more variety without a full hour</p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#peony">Book Peony</a>
       </div>
+    </div>
+    <hr>
 
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#iris" class="w3-display-container">
-          <img src="assets/portfolio/full/Iris%20Package.jpg" alt="Iris Package" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Iris</div>
-        </a>
+    <!-- IRIS (text left, image right) -->
+    <h3 class="w3-center mj-section-title"><b>IRIS PACKAGE</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12">
+        <p><b>$250 • 60 minutes</b></p>
+        <p>1 location (or 2 close/walkable spots) • Online gallery • <b>At least 28 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: family pictures, couples that want a mix of variety and quality</p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#iris">Book Iris</a>
       </div>
-
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#lily" class="w3-display-container">
-          <img src="assets/portfolio/full/Lily%20Package.jpg" alt="Lily Package" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Lily</div>
-        </a>
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Iris%20Package.jpg" alt="Iris Package">
       </div>
+    </div>
+    <hr>
 
-      <!-- Row 2 -->
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#orchid" class="w3-display-container">
-          <img src="assets/portfolio/full/Orchid%20Package.jpg" alt="Orchid Package" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Orchid</div>
-        </a>
+    <!-- CARNATION (image left) -->
+    <h3 class="w3-center mj-section-title"><b>CARNATION PACKAGE</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Carnation%20Package.jpg" alt="Carnation Package">
       </div>
-
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#headshots" class="w3-display-container">
-          <img src="assets/portfolio/full/Headshots%20Package.jpg" alt="Headshots Package" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Headshots</div>
-        </a>
+      <div class="w3-col m6 s12">
+        <p><b>$150 • 30 minutes</b></p>
+        <p>1 location • Online gallery • <b>At least 12 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: couples, quick family updates, announcements</p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#carnation">Book Carnation</a>
       </div>
+    </div>
+    <hr>
 
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="book.html#special-event" class="w3-display-container">
-          <img src="assets/portfolio/full/Dance%20Package.jpg" alt="Dance Package (Special Event)" class="w3-image w3-round" loading="lazy">
-          <div class="w3-display-bottomleft w3-padding w3-black w3-opacity-min w3-round">Dance / Special Event</div>
-        </a>
+    <!-- LILY (text left) -->
+    <h3 class="w3-center mj-section-title"><b>LILY PACKAGE</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12">
+        <p><b>$350 • 90 minutes</b></p>
+        <p>2 locations (within ~10–15 miles) • Online gallery • <b>At least 40 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: those that want more personalization, variety, and keepsakes</p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#lily">Book Lily</a>
       </div>
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Lily%20Package.jpg" alt="Lily Package">
+      </div>
+    </div>
+    <hr>
 
-      <!-- Spacer / optional extra tile -->
-      <div class="w3-col l3 m6 s12 w3-margin-bottom">
-        <a href="packages.html" class="w3-display-container">
-          <div class="w3-card w3-round w3-center w3-padding-32 w3-white" style="height:100%;">
-            <h3>See All Details</h3>
-            <p class="w3-text-grey">Packages, add-ons, prints</p>
-            <span class="w3-button w3-dark-grey w3-round">Packages</span>
-          </div>
-        </a>
+    <!-- ORCHID (image left) -->
+    <h3 class="w3-center mj-section-title"><b>ORCHID PACKAGE (Proposal / Milestone)</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Orchid%20Package.jpg" alt="Orchid Package">
+      </div>
+      <div class="w3-col m6 s12">
+        <p><b>$575 • up to 90 minutes</b></p>
+        <p>Planning assistance • Online gallery • <b>At least 45 edited photos (often more)</b></p>
+        <p class="w3-text-grey">Ideal for: proposals, anniversaries, engagements, milestone moments</p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#orchid">Book Orchid</a>
+      </div>
+    </div>
+    <hr>
+
+    <!-- HEADSHOTS (text left) -->
+    <h3 class="w3-center mj-section-title"><b>HEADSHOTS PACKAGE</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12">
+        <p><b>$150 • 30 minutes</b></p>
+        <p>Up to 2 outfits • 1 location • Online gallery • <b>At least 12 edited photos (often more)</b></p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#headshots">Book Headshots</a>
+      </div>
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Headshots%20Package.jpg" alt="Headshots Package">
+      </div>
+    </div>
+    <hr>
+
+    <!-- SPECIAL EVENT / DANCE (image left) -->
+    <h3 class="w3-center mj-section-title"><b>SPECIAL EVENT (Dance Package)</b></h3>
+    <div class="w3-row-padding w3-padding-16">
+      <div class="w3-col m6 s12 w3-margin-bottom">
+        <img class="mj-package-img w3-round" src="assets/portfolio/full/Dance%20Package.jpg" alt="Dance / Special Event">
+      </div>
+      <div class="w3-col m6 s12">
+        <p><b>Quote • default 90 minutes</b></p>
+        <p class="w3-text-grey">
+          The default time is 90 minutes, but you can reach out to me for a quote for your event.
+          Prices vary by party size and time.
+        </p>
+        <a class="w3-button w3-dark-grey w3-round" href="book.html#special-event">Request / Book Special Event</a>
       </div>
     </div>
 
+    <div class="w3-center w3-margin-top">
+      <a href="packages.html" class="w3-button w3-light-grey w3-round">See Full Package Details</a>
+    </div>
   </div>
 </div>
 
-<!-- Contact/footer -->
-<div class="w3-container w3-dark-grey w3-center w3-padding-24">
-  <p style="margin:0;">
-    Questions? Email <a href="mailto:hello@malloryjanephotography.com" class="w3-text-white">hello@malloryjanephotography.com</a>
+<!-- CONTACT FOOTER -->
+<footer class="w3-container w3-dark-grey w3-center w3-padding-32 mj-footer">
+  <h3 class="mj-section-title">Contact Me</h3>
+  <p>
+    <a class="w3-text-white" href="mailto:mal.jane.photography@gmail.com">mal.jane.photography@gmail.com</a>
   </p>
-</div>
+
+  <div class="mj-social">
+    <a href="https://www.facebook.com/profile.php?id=61570271263678" target="_blank" rel="noopener" aria-label="Facebook">
+      <!-- Facebook icon -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5A3.5 3.5 0 0 1 14.2 6h2.3v3h-2.3c-.7 0-1.2.6-1.2 1.3V12H17l-.5 3h-3v7A10 10 0 0 0 22 12z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/mallory.jane_photography/" target="_blank" rel="noopener" aria-label="Instagram">
+      <!-- Instagram icon -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 12 3.5 3.5 0 0 0 12 10.5zM18 6.8a1.2 1.2 0 1 1-1.2 1.2A1.2 1.2 0 0 1 18 6.8z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
 
 <script>
   // Auto-rotating carousel
@@ -177,7 +230,7 @@
     mjSlideIndex++;
     if (mjSlideIndex > slides.length) mjSlideIndex = 1;
     slides[mjSlideIndex - 1].style.display = "block";
-    setTimeout(mjCarousel, 3500); // 3.5s per slide
+    setTimeout(mjCarousel, 3500);
   }
   mjCarousel();
 </script>
