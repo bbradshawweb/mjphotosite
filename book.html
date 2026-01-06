@@ -17,7 +17,7 @@
   </a>
 
   <div class="w3-right w3-hide-small">
-    <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+    <a href="index.html" class="w3-bar-item w3-button">Home</a>
     <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
     <a href="book.html" class="w3-bar-item w3-button w3-light-grey w3-round">Book</a>
   </div>
@@ -25,16 +25,15 @@
 
 <!-- Mobile nav -->
 <div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
-  <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+  <a href="index.html" class="w3-bar-item w3-button">Home</a>
   <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
-  <a href="book.html" class="w3-bar-item w3-button">Book</a>
+  <a href="book.html" class="w3-bar-item w3-button w3-light-grey">Book</a>
 </div>
 
 <div class="w3-content w3-padding-large w3-margin-top" style="max-width:1100px">
   <h2 class="w3-center">Book a Session</h2>
   <p class="w3-center w3-text-grey">Choose a package to see matching time slots.</p>
 
-  <!-- Package selector -->
   <div class="w3-center w3-margin-bottom">
     <div class="w3-bar w3-light-grey w3-round">
       <button class="w3-bar-item w3-button" onclick="selectPackage('carnation')">Carnation</button>
@@ -43,10 +42,10 @@
       <button class="w3-bar-item w3-button" onclick="selectPackage('lily')">Lily</button>
       <button class="w3-bar-item w3-button" onclick="selectPackage('orchid')">Orchid</button>
       <button class="w3-bar-item w3-button" onclick="selectPackage('headshots')">Headshots</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('special-event')">Special Event</button>
     </div>
   </div>
 
-  <!-- Inline calendar container -->
   <div id="cal-inline" class="w3-card w3-round" style="width:100%; height:900px; overflow:scroll;"></div>
 
   <p class="w3-center w3-text-grey w3-small w3-margin-top">
@@ -88,58 +87,48 @@
 </script>
 
 <script type="text/javascript">
-  /**
-   * This MUST match the identifier exactly (including case) from:
-   * Cal Event Type -> Advanced -> Booking Questions
-   * Cal uses identifiers as the prefill keys. :contentReference[oaicite:2]{index=2}
-   */
   const PACKAGE_FIELD_IDENTIFIER = "Package";
 
-  // Your Cal event links (paths, not full URLs)
   const CAL_EVENT = {
     min30: "mallory-jane-photo/30min",
     min45: "mallory-jane-photo/45min",
     min60: "mallory-jane-photo/60-minute-session",
-    min90: "mallory-jane-photo/90-minute-session",
+    min90: "mallory-jane-photo/90-minute-session"
   };
 
-  // Package routing (multiple packages can share the same duration/event)
   const PACKAGES = {
-    carnation: { label: "CARNATION PACKAGE", calBase: CAL_EVENT.min30 },
-    headshots: { label: "HEADSHOTS PACKAGE", calBase: CAL_EVENT.min30 },
+    carnation:     { label: "CARNATION PACKAGE", calBase: CAL_EVENT.min30 },
+    headshots:     { label: "HEADSHOTS PACKAGE", calBase: CAL_EVENT.min30 },
 
-    peony: { label: "PEONY PACKAGE", calBase: CAL_EVENT.min45 },
+    peony:         { label: "PEONY PACKAGE", calBase: CAL_EVENT.min45 },
 
-    iris: { label: "IRIS PACKAGE", calBase: CAL_EVENT.min60 },
+    iris:          { label: "IRIS PACKAGE", calBase: CAL_EVENT.min60 },
 
-    lily: { label: "LILY PACKAGE", calBase: CAL_EVENT.min90 },
-    orchid: { label: "ORCHID PACKAGE (Proposal / Milestone)", calBase: CAL_EVENT.min90 },
+    lily:          { label: "LILY PACKAGE", calBase: CAL_EVENT.min90 },
+    orchid:        { label: "ORCHID PACKAGE (Proposal / Milestone)", calBase: CAL_EVENT.min90 },
+
+    "special-event": { label: "SPECIAL EVENT (Dance Package) — Quote", calBase: CAL_EVENT.min90 }
   };
 
   function renderCal(calBase, packageLabel) {
     const el = document.querySelector("#cal-inline");
     el.innerHTML = "";
 
-    // Prefill booking form fields in embeds via `config`. :contentReference[oaicite:3]{index=3}
-    const prefillConfig = {
-      layout: "month_view",
-      [PACKAGE_FIELD_IDENTIFIER]: packageLabel
-    };
-
     Cal("inline", {
       elementOrSelector: "#cal-inline",
       calLink: calBase,
-      config: prefillConfig
+      config: {
+        layout: "month_view",
+        [PACKAGE_FIELD_IDENTIFIER]: packageLabel
+      }
     });
 
     Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
   }
 
   function highlightSelected(pkgKey) {
-    document.querySelectorAll(".w3-bar button.w3-button").forEach(btn => {
-      btn.classList.remove("w3-dark-grey");
-    });
-    const order = ["carnation","peony","iris","lily","orchid","headshots"];
+    document.querySelectorAll(".w3-bar button.w3-button").forEach(btn => btn.classList.remove("w3-dark-grey"));
+    const order = ["carnation","peony","iris","lily","orchid","headshots","special-event"];
     const idx = order.indexOf(pkgKey);
     const buttons = document.querySelectorAll(".w3-bar button.w3-button");
     if (idx >= 0 && buttons[idx]) buttons[idx].classList.add("w3-dark-grey");
@@ -149,17 +138,14 @@
     const pkg = PACKAGES[pkgKey];
     if (!pkg) return;
 
-    // Keep URL hash so packages.html links work (book.html#iris)
     window.location.hash = pkgKey;
 
-    // Store selection for confirmation fallback
     try {
       localStorage.setItem("mj_selected_package_key", pkgKey);
       localStorage.setItem("mj_selected_package_label", pkg.label);
     } catch (e) {}
 
     highlightSelected(pkgKey);
-
     renderCal(pkg.calBase, pkg.label);
   }
 
