@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="site.css">
   <title>Confirmed | Mallory Jane Photography</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
 
@@ -18,15 +18,22 @@
   </a>
 
   <div class="w3-right w3-hide-small">
-    <a href="gallery.html" class="w3-bar-item w3-button">Gallery</a>
+    <a href="index.html" class="w3-bar-item w3-button">Home</a>
     <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
     <a href="book.html" class="w3-bar-item w3-button w3-light-grey w3-round">Book</a>
   </div>
 </div>
 
+<!-- Mobile nav -->
+<div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
+  <a href="index.html" class="w3-bar-item w3-button">Home</a>
+  <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+  <a href="book.html" class="w3-bar-item w3-button w3-light-grey">Book</a>
+</div>
+
 <div class="w3-content w3-padding-large w3-margin-top" style="max-width:900px">
   <div class="w3-card w3-round w3-padding-large">
-    <h2 class="w3-center">You’re Booked 🎉</h2>
+    <h2 class="w3-center mj-section-title">You’re Booked 🎉</h2>
     <p class="w3-center w3-text-grey">
       A confirmation email should arrive shortly with your exact time/location details.
       If you don’t see it, check spam/junk.
@@ -34,7 +41,7 @@
 
     <hr>
 
-    <h3>Booking details</h3>
+    <h3 class="mj-section-title">Booking details</h3>
 
     <div class="w3-responsive">
       <table class="w3-table w3-bordered">
@@ -63,83 +70,49 @@
 
     <p class="w3-text-grey w3-small w3-margin-top" id="detail-note"></p>
 
+    <!-- PAYMENT INFO SECTION -->
+    <div class="w3-light-grey w3-round w3-padding w3-margin-top">
+      <h3 class="mj-section-title">Payment</h3>
+
+      <p id="payment-copy" class="w3-large" style="margin-top:0;"></p>
+
+      <div class="w3-row-padding w3-margin-top">
+        <div class="w3-col m6 s12 w3-center w3-margin-bottom">
+          <a href="https://venmo.com/u/malbradshaw08" target="_blank" rel="noopener" aria-label="Pay on Venmo">
+            <img src="assets/brand/MalVenmo.png" alt="Venmo QR Code" class="w3-image w3-round" style="max-width:320px;">
+          </a>
+          <p class="w3-small w3-text-grey" style="margin-top:8px;">Tap the QR code to open Venmo</p>
+        </div>
+
+        <div class="w3-col m6 s12">
+          <p><b>Venmo link:</b></p>
+          <p>
+            <a href="https://venmo.com/u/malbradshaw08" target="_blank" rel="noopener">
+              venmo.com/u/malbradshaw08
+            </a>
+          </p>
+
+          <div class="w3-margin-top">
+            <a class="w3-button w3-dark-grey w3-round" href="https://venmo.com/u/malbradshaw08" target="_blank" rel="noopener">
+              Pay on Venmo
+            </a>
+          </div>
+
+          <p class="w3-text-grey w3-small w3-margin-top">
+            If you prefer another payment method, just reply to my email/text and we’ll make it easy.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <div class="w3-center w3-margin-top">
       <a href="packages.html" class="w3-button w3-light-grey w3-round w3-margin-right">View Packages</a>
       <a href="index.html" class="w3-button w3-dark-grey w3-round">Back Home</a>
     </div>
-
-    <div class="w3-light-grey w3-round w3-padding w3-margin-top">
-      <h4>What happens next?</h4>
-      <ul>
-        <li>I’ll reach out if we need to confirm location/timing details.</li>
-        <li>You’ll receive an online gallery link after editing is complete.</li>
-        <li>Questions? Email <a href="mailto:hello@malloryjanephotography.com">hello@malloryjanephotography.com</a>.</li>
-      </ul>
-    </div>
   </div>
 </div>
 
-<script>
-  // If your Cal booking question identifier is different, update this too.
-  const PACKAGE_FIELD_IDENTIFIER = "package";
-
-  const qs = new URLSearchParams(window.location.search);
-
-  // Package: prefer query param; fallback to localStorage from book.html
-  const pkgFromQuery = qs.get(PACKAGE_FIELD_IDENTIFIER);
-  let pkg = pkgFromQuery;
-  try {
-    if (!pkg) pkg = localStorage.getItem("mj_selected_package_label");
-  } catch (e) {}
-
-  // Cal may pass different param names depending on configuration.
-  const name =
-    qs.get("name") ||
-    qs.get("fullName") ||
-    qs.get("attendeeName") ||
-    "";
-
-  const email =
-    qs.get("email") ||
-    qs.get("attendeeEmail") ||
-    "";
-
-  const tz =
-    qs.get("timezone") ||
-    qs.get("tz") ||
-    "";
-
-  // Some systems pass startDate in ISO; we’ll try to format if present.
-  const startRaw =
-    qs.get("startDate") ||
-    qs.get("startTime") ||
-    qs.get("start") ||
-    "";
-
-  function formatDateTime(raw) {
-    if (!raw) return "";
-    const d = new Date(raw);
-    if (isNaN(d.getTime())) return raw; // if it's not ISO, just show raw
-    return d.toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
-  }
-
-  document.getElementById("detail-package").textContent = pkg || "—";
-  document.getElementById("detail-name").textContent = name || "—";
-  document.getElementById("detail-email").textContent = email || "—";
-  document.getElementById("detail-datetime").textContent = formatDateTime(startRaw) || "—";
-  document.getElementById("detail-timezone").textContent = tz || "—";
-
-  // If Cal doesn’t forward details, explain why gracefully
-  const noteEl = document.getElementById("detail-note");
-  if (!pkgFromQuery && !name && !email && !startRaw) {
-    noteEl.textContent =
-      "Note: Some booking details may only appear in your confirmation email (depending on what Cal forwards on redirect).";
-  } else {
-    noteEl.textContent = "";
-  }
-</script>
-
-  <!-- CONTACT FOOTER -->
+<!-- CONTACT FOOTER -->
 <footer class="w3-container w3-dark-grey w3-center w3-padding-32 mj-footer">
   <h3 class="mj-section-title">Contact Me</h3>
   <p>
@@ -160,5 +133,120 @@
     </a>
   </div>
 </footer>
+
+<script>
+  // Booking question identifier (case-sensitive) from Cal
+  const PACKAGE_FIELD_IDENTIFIER = "Package";
+  const qs = new URLSearchParams(window.location.search);
+
+  // Package: prefer query param; fallback to localStorage (set in book.html)
+  const pkgFromQuery = qs.get(PACKAGE_FIELD_IDENTIFIER);
+  let pkg = pkgFromQuery;
+  let pkgKey = null;
+
+  try {
+    if (!pkg) pkg = localStorage.getItem("mj_selected_package_label");
+    pkgKey = localStorage.getItem("mj_selected_package_key");
+  } catch (e) {}
+
+  // Try to capture common booking detail params (Cal may or may not forward them)
+  const name =
+    qs.get("name") ||
+    qs.get("fullName") ||
+    qs.get("attendeeName") ||
+    "";
+
+  const email =
+    qs.get("email") ||
+    qs.get("attendeeEmail") ||
+    "";
+
+  const tz =
+    qs.get("timezone") ||
+    qs.get("tz") ||
+    "";
+
+  const startRaw =
+    qs.get("startDate") ||
+    qs.get("startTime") ||
+    qs.get("start") ||
+    "";
+
+  function formatDateTime(raw) {
+    if (!raw) return "";
+    const d = new Date(raw);
+    if (isNaN(d.getTime())) return raw;
+    return d.toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
+  }
+
+  document.getElementById("detail-package").textContent = pkg || "—";
+  document.getElementById("detail-name").textContent = name || "—";
+  document.getElementById("detail-email").textContent = email || "—";
+  document.getElementById("detail-datetime").textContent = formatDateTime(startRaw) || "—";
+  document.getElementById("detail-timezone").textContent = tz || "—";
+
+  const noteEl = document.getElementById("detail-note");
+  if (!pkgFromQuery && !name && !email && !startRaw) {
+    noteEl.textContent =
+      "Note: Some booking details may only appear in your confirmation email (depending on what Cal forwards on redirect).";
+  } else {
+    noteEl.textContent = "";
+  }
+
+  // --- Payment copy with dynamic package price ---
+  const PRICE_BY_KEY = {
+    "carnation": 150,
+    "peony": 200,
+    "iris": 250,
+    "lily": 350,
+    "orchid": 575,
+    "headshots": 150,
+    "special-event": null
+  };
+
+  // If we don't have a key (only a label), infer it from the label text
+  function inferKeyFromLabel(label) {
+    if (!label) return null;
+    const s = label.toLowerCase();
+    if (s.includes("carnation")) return "carnation";
+    if (s.includes("peony")) return "peony";
+    if (s.includes("iris")) return "iris";
+    if (s.includes("lily")) return "lily";
+    if (s.includes("orchid")) return "orchid";
+    if (s.includes("headshot")) return "headshots";
+    if (s.includes("special") || s.includes("dance") || s.includes("event")) return "special-event";
+    return null;
+  }
+
+  const resolvedKey = pkgKey || inferKeyFromLabel(pkg);
+  const price = resolvedKey ? PRICE_BY_KEY[resolvedKey] : null;
+
+  function money(n) {
+    return typeof n === "number" ? `$${n.toFixed(0)}` : "";
+  }
+
+  const paymentEl = document.getElementById("payment-copy");
+
+  const baseTextStart =
+    "Congrats on your booking! I will be in touch regarding details. We can chat there about any questions you have or details for your booking. ";
+
+  const pricingSentenceStandard =
+    `Your total without any add-ons is ${money(price)}. `;
+
+  const pricingSentenceCustom =
+    "Your total without any add-ons will be confirmed with you by quote. ";
+
+  const baseTextEnd =
+    "This won't be due until the time of your event. The standard practice is half before the pictures are taken, half when the pictures are received, but I am a real person and things happen! For now, focus on the hard parts: getting your outfits together and getting excited! Keep a look out for my email/text!";
+
+  // If special event OR missing price, use custom sentence
+  const useCustom = (resolvedKey === "special-event") || (price === null);
+
+  paymentEl.textContent =
+    baseTextStart +
+    (useCustom ? pricingSentenceCustom : pricingSentenceStandard) +
+    baseTextEnd;
+</script>
+
 </body>
 </html>
