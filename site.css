@@ -29,7 +29,14 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%; /* Can adjust to ensure photo clarity */
+  object-position: var(--pos, center 20%); /* desktop default */
+}
+
+/* On mobile, use --posMobile if provided, otherwise fall back to --pos, then default */
+@media (max-width: 600px){
+  .mj-slide img{
+    object-position: var(--posMobile, var(--pos, center 50%));
+  }
 }
 
 
