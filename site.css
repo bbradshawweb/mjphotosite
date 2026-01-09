@@ -4,40 +4,6 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
   font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif !important;
 }
 
-/* --- Translucent overlay nav --- */
-.mj-nav {
-  background: rgba(255,255,255,0.65) !important;  /* see-through */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Keep nav above carousel */
-.mj-nav-main {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1000;
-}
-
-.mj-nav-mobile {
-  position: fixed;
-  left: 0; right: 0;
-  z-index: 999;
-}
-
-/* Give pages room so content doesn't hide under fixed nav */
-@media (min-width: 601px){
-  body { padding-top: 64px; }
-  /* Pull the carousel back up so it sits UNDER the translucent nav */
-  .mj-carousel-wrap { margin-top: -64px; }
-}
-
-@media (max-width: 600px){
-  body { padding-top: 112px; }
-  .mj-nav-mobile { top: 56px; }     /* sits under the logo bar */
-  .mj-carousel-wrap { margin-top: -112px; }
-}
-
-
 /* Carousel Feature */
 .mj-carousel-wrap{
   position: relative;
