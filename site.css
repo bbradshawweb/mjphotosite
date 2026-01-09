@@ -8,20 +8,22 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
 .mj-carousel-wrap{
   position: relative;
   width: 100%;
-  height: 92vh;          /* bigger on desktop */
-  min-height: 680px;     /* bigger on desktop */
-  max-height: 1100px;
+  aspect-ratio: 16 / 9;   /* or try 21/9 if you want more cinematic */
+  max-height: 88vh;       /* keeps it big */
+  min-height: 560px;      /* keeps it substantial */
   overflow: hidden;
 }
 
-/* Keep mobile (smaller + stable) */
+/* Mobile stays as you like it */
 @media (max-width: 600px){
   .mj-carousel-wrap{
+    aspect-ratio: auto;
     height: 70vh;
     min-height: 480px;
     max-height: 760px;
   }
 }
+
 
 
 .mj-slide{
