@@ -35,19 +35,21 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
   opacity: 1;
 }
 
+/* Desktop: match mobile default (centered) unless overridden */
 .mj-slide img{
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: var(--pos, center 20%); /* desktop default */
+  object-position: var(--posDesktop, center 50%);
 }
 
-/* On mobile, use --posMobile if provided, otherwise fall back to --pos, then default */
+/* Mobile: keep current good behavior, allow mobile-only override */
 @media (max-width: 600px){
   .mj-slide img{
-    object-position: var(--posMobile, var(--pos, center 50%));
+    object-position: var(--posMobile, center 50%);
   }
 }
+
 
 
 .mj-package-img{
