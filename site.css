@@ -8,13 +8,12 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
 .mj-carousel-wrap{
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;   /* or try 21/9 if you want more cinematic */
-  max-height: 88vh;       /* keeps it big */
-  min-height: 560px;      /* keeps it substantial */
+  aspect-ratio: 16 / 9;   /* I can also fiddle to 21/9 if we wanna get real crazy */
+  max-height: 88vh;       /* keeps big */
+  min-height: 560px;      /* keeps substantial */
   overflow: hidden;
 }
 
-/* Mobile stays as you like it */
 @media (max-width: 600px){
   .mj-carousel-wrap{
     aspect-ratio: auto;
@@ -97,3 +96,13 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
   height: 22px;
   fill: #fff;
 }
+
+/* Mobile-only: give the hero overlay more space so text + button never clip */
+@media (max-width: 600px){
+  .mj-hero-overlay{
+    padding: 18px 16px !important;
+    width: calc(100% - 32px);
+    max-width: 360px;
+  }
+}
+
