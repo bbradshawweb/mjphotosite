@@ -266,5 +266,48 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
     baseTextEnd;
 </script>
 
+<!-- Meta Conversion Event, in theory -->
+<script>
+  // Fire booking conversion ONCE per bookingUid to avoid double-counting refreshes
+  (function () {
+    if (typeof fbq !== "function") return;
+
+    const qs = new URLSearchParams(window.location.search);
+    const bookingUid = qs.get("bookingUid") || ""; // Cal redirect includes bookingUid
+    const firedKey = bookingUid ? `mj_schedule_fired_${bookingUid}` : "mj_schedule_fired";
+
+    try {
+      if (sessionStorage.getItem(firedKey)) return;
+      sessionStorage.setItem(firedKey, "1");
+    } catch (e) {
+      // If sessionStorage blocked, still fire (better than missing conversions)
+    }
+
+    // Pull your package label/price from your existing logic if you already store it
+    const pkgLabel = (localStorage.getItem("mj_selected_package_label") || "").trim();
+    const pkgKey = (localStorage.getItem("mj_selected_package_key") || "").trim();
+
+    const PRICE_BY_KEY = {
+      carnation: 150,
+      peony: 200,
+      iris: 250,
+      lily: 350,
+      orchid: 575,
+      headshots: 150,
+      "special-event": 0
+    };
+
+    const value = (pkgKey && PRICE_BY_KEY[pkgKey] != null) ? PRICE_BY_KEY[pkgKey] : 0;
+
+    fbq("track", "Schedule", {
+      content_name: pkgLabel || pkgKey || "Booking",
+      value: value,
+      currency: "USD",
+      bookingUid: bookingUid || undefined
+    });
+  })();
+</script>
+
+  
 </body>
 </html>
