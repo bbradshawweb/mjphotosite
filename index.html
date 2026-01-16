@@ -72,44 +72,44 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
 <div class="mj-carousel-wrap w3-display-container">
 
    <div class="mj-slide active" style="--posDesktop: 50% 40%;">
-    <img src="assets/portfolio/full/carousel/Carousel1.jpg" alt="Carousel 1" loading="eager">
+    <img src="assets/portfolio/full/carousel/Carousel1.jpg" alt="Carousel 1" loading="eager" decoding="async" fetchpriority="high">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 35%;">
-    <img src="assets/portfolio/full/carousel/Carousel2.jpg" alt="Carousel 2" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel2.jpg" alt="Carousel 2" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 40%;">
-    <img src="assets/portfolio/full/carousel/Carousel3.jpg" alt="Carousel 3" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel3.jpg" alt="Carousel 3" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 42%;">
-    <img src="assets/portfolio/full/carousel/Carousel4.jpg" alt="Carousel 4" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel4.jpg" alt="Carousel 4" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 40%;">
-    <img src="assets/portfolio/full/carousel/Carousel5.jpg" alt="Carousel 5" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel5.jpg" alt="Carousel 5" loading="lazy" decoding="async">
   </div>
 
  
   <div class="mj-slide" style="--posDesktop: 50% 5%;">
-    <img src="assets/portfolio/full/carousel/Carousel6.jpg" alt="Carousel 6" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel6.jpg" alt="Carousel 6" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide">
-    <img src="assets/portfolio/full/carousel/Carousel7.jpg" alt="Carousel 7" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel7.jpg" alt="Carousel 7" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 60%;">
-    <img src="assets/portfolio/full/carousel/Carousel8.jpg" alt="Carousel 8" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel8.jpg" alt="Carousel 8" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 64%; --posMobile: 82% 50%;">
-    <img src="assets/portfolio/full/carousel/Carousel9.jpg" alt="Carousel 9" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel9.jpg" alt="Carousel 9" loading="lazy" decoding="async">
   </div>
 
   <div class="mj-slide" style="--posDesktop: 50% 50%;">
-    <img src="assets/portfolio/full/carousel/Carousel10.jpg" alt="Carousel 10" loading="lazy">
+    <img data-src="assets/portfolio/full/carousel/Carousel10.jpg" alt="Carousel 10" loading="lazy" decoding="async">
   </div>
 
   <!-- Text overlay -->
@@ -295,9 +295,19 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
 </footer>
 
 <script>
-  // Calm crossfade carousel: slower fade + 1s longer between transitions
   const slides = Array.from(document.querySelectorAll(".mj-slide"));
   let idx = 0;
+
+  function ensureLoaded(i){
+    const img = slides[i]?.querySelector("img");
+    if (!img) return;
+
+    if (img.dataset.src && !img.dataset.loaded){
+      img.loading = "eager"; // start fetching immediately once we decide we need it
+      img.src = img.dataset.src;
+      img.dataset.loaded = "1";
+    }
+  }
 
   function showSlide(nextIdx){
     slides[idx].classList.remove("active");
@@ -305,11 +315,19 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
     slides[idx].classList.add("active");
   }
 
+  ensureLoaded(0);
+  ensureLoaded(1);
+
   setInterval(() => {
     const next = (idx + 1) % slides.length;
+
+    ensureLoaded(next);
     showSlide(next);
-  }, 4500); // was 3500, now +1000ms
+    ensureLoaded((next + 1) % slides.length);
+  }, 4500);
 </script>
+
+
 
 </body>
 </html>
