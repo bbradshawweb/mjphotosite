@@ -28,16 +28,41 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
 </head>
 <body>
 
-<div class="w3-bar w3-white w3-padding w3-card">
-  <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
-    <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:28px;vertical-align:middle;">
+<!-- Top nav -->
+<div class="w3-bar w3-card mj-topbar w3-padding w3-hide-small">
+  <a href="index.html" class="w3-bar-item w3-button w3-padding-small mj-brand">
+    <img src="assets/brand/logo.png" alt="Mallory Jane Photography" class="mj-logo">
+    <span class="mj-brand-text">Mallory Jane Photography</span>
   </a>
 
   <div class="w3-right w3-hide-small">
     <a href="index.html" class="w3-bar-item w3-button">Home</a>
     <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
     <a href="book.html" class="w3-bar-item w3-button">Book</a>
-    <a href="quote.html" class="w3-bar-item w3-button w3-light-grey w3-round">Get A Quote</a>
+    <a href="quote.html" class="w3-bar-item w3-button mj-nav-active">Get A Quote</a>
+  </div>
+</div>
+
+
+<!-- Mobile nav -->
+<div class="w3-card mj-topbar w3-hide-medium w3-hide-large">
+
+  <!-- Brand line -->
+  <div class="w3-center w3-padding-12">
+    <div class="mj-brand" style="justify-content:center;">
+      <a href="index.html" class="w3-button mj-brand" style="background:transparent;">
+        <img src="assets/brand/logo.png" alt="Mallory Jane Photography" class="mj-logo">
+        <span class="mj-brand-text">Mallory Jane Photography</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Links -->
+  <div class="w3-bar mj-mobile-links" style="background: rgba(0,0,0,0.08);">
+    <a href="index.html" class="w3-bar-item w3-button">Home</a>
+    <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+    <a href="book.html" class="w3-bar-item w3-button">Book</a>
+    <a href="quote.html" class="w3-bar-item w3-button mj-nav-active">Get A Quote</a>
   </div>
 </div>
 
