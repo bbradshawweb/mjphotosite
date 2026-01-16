@@ -97,6 +97,20 @@ html, body, h1, h2, h3, h4, h5, h6, button, input, textarea {
   fill: #fff;
 }
 
+/* Soft blue section behind the embedded form */
+.mj-soft-blue {
+  background: #eaf3ff;          /* soft blue */
+  padding: 28px 12px;
+}
+
+.mj-quote-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+}
+
+
 /* Mobile-only: give the hero overlay more space so text + button never clip */
 @media (max-width: 600px){
   .mj-hero-overlay{
