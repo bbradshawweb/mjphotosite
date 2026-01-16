@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Quotes | Mallory Jane Photography</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicons (use what you actually have right now) -->
+  <link rel="icon" type="image/png" href="/assets/brand/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/brand/favicon.png">
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="/site.css">
+
+  <!-- META PIXEL -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1623673111916243');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- END META PIXEL -->
+
+  <style>
+    /* Keeps the embed nicely framed under your nav */
+    .mj-quote-wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 8px;
+    }
+
+    .mj-quote-card{
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Overlay used only to detect the FIRST interaction (start event) */
+    .mj-iframe-start-overlay{
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .mj-iframe-shell{
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Top nav -->
+<div class="w3-bar w3-white w3-padding w3-card">
+  <a href="index.html" class="w3-bar-item w3-button w3-padding-small">
+    <img src="assets/brand/logo.png" alt="Mallory Jane Photography" style="height:56px;vertical-align:middle;">
+  </a>
+
+  <div class="w3-right w3-hide-small">
+    <a href="index.html" class="w3-bar-item w3-button">Home</a>
+    <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+    <a href="book.html" class="w3-bar-item w3-button">Book</a>
+    <a href="quote.html" class="w3-bar-item w3-button w3-light-grey w3-round">Quotes</a>
+  </div>
+</div>
+
+<!-- Mobile nav -->
+<div class="w3-bar w3-light-grey w3-hide-medium w3-hide-large">
+  <a href="index.html" class="w3-bar-item w3-button">Home</a>
+  <a href="packages.html" class="w3-bar-item w3-button">Packages</a>
+  <a href="book.html" class="w3-bar-item w3-button">Book</a>
+  <a href="quote.html" class="w3-bar-item w3-button w3-light-grey">Quotes</a>
+</div>
+
+<!-- CONTENT -->
+<div class="mj-quote-wrap">
+  <h2 class="w3-center mj-section-title">Request a Quote</h2>
+  <p class="w3-center w3-text-grey" style="max-width:780px;margin:0 auto 18px;">
+    Fill out the form below and I’ll reach out as soon as I can. If this is time-sensitive, feel free to email me directly.
+  </p>
+
+  <div class="w3-card w3-round w3-padding-large mj-quote-card">
+    <div class="mj-iframe-shell">
+      <!-- Click/tap overlay to detect "started" once, then remove itself -->
+      <div id="mjStartOverlay" class="mj-iframe-start-overlay" aria-label="Start quote form"></div>
+
+      <!-- Your exact embed, with an ID so we can listen for load events -->
+      <iframe
+        id="mjQuoteForm"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSeuuRg4mhgOHd2RkLFV7-TwlURwMxmgFdI_o6RHob3HFyDQzQ/viewform?embedded=true"
+        style="width:100%; height:calc(100vh - 260px); min-height:950px; max-height:1400px; border:0;"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT FOOTER -->
+<footer class="w3-container w3-dark-grey w3-center w3-padding-32 mj-footer">
+  <h3 class="mj-section-title">Contact Me</h3>
+  <p>
+    <a class="w3-text-white" href="mailto:mal.jane.photography@gmail.com">mal.jane.photography@gmail.com</a>
+  </p>
+
+  <div class="mj-social">
+    <a href="https://www.facebook.com/profile.php?id=61570271263678" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5A3.5 3.5 0 0 1 14.2 6h2.3v3h-2.3c-.7 0-1.2.6-1.2 1.3V12H17l-.5 3h-3v7A10 10 0 0 0 22 12z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/mallory.jane_photography/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 12 3.5 3.5 0 0 0 12 10.5zM18 6.8a1.2 1.2 0 1 1-1.2 1.2A1.2 1.2 0 0 1 18 6.8z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // ---- Meta Pixel custom events ----
+    function trackCustomSafe(eventName, params) {
+      try {
+        if (typeof fbq === "function") fbq("trackCustom", eventName, params || {});
+      } catch (e) {}
+    }
+
+    const overlay = document.getElementById("mjStartOverlay");
+    const iframe = document.getElementById("mjQuoteForm");
+
+    // Session guards
+    const startedKey = "mj_quote_started";
+    const endedKey   = "mj_quote_ended";
+    const startTimeKey = "mj_quote_started_at";
+
+    function markStarted() {
+      if (sessionStorage.getItem(startedKey)) return;
+
+      sessionStorage.setItem(startedKey, "1");
+      sessionStorage.setItem(startTimeKey, String(Date.now()));
+
+      trackCustomSafe("QuoteFormStarted", {
+        page: location.pathname
+      });
+
+      // Remove overlay so the user can interact with the form normally
+      if (overlay) overlay.style.display = "none";
+    }
+
+    // Fire "started" on first click/tap anywhere over the iframe
+    if (overlay) {
+      overlay.addEventListener("click", markStarted, { passive: true });
+      overlay.addEventListener("touchstart", markStarted, { passive: true });
+    }
+
+    // Best-effort "ended" detection:
+    // Google Form usually loads a new page *inside the iframe* after submission,
+    // which triggers iframe.onload again. We treat the first load AFTER started as "ended".
+    if (iframe) {
+      let firstLoadSeen = false;
+
+      iframe.addEventListener("load", function () {
+        // Ignore the very first load (page render)
+        if (!firstLoadSeen) {
+          firstLoadSeen = true;
+          return;
+        }
+
+        // Only consider "ended" if the user actually started the form
+        if (!sessionStorage.getItem(startedKey)) return;
+        if (sessionStorage.getItem(endedKey)) return;
+
+        const startedAt = Number(sessionStorage.getItem(startTimeKey) || "0");
+        const elapsed = Date.now() - startedAt;
+
+        // Guard against accidental reloads: require at least 8 seconds after start
+        if (elapsed < 8000) return;
+
+        sessionStorage.setItem(endedKey, "1");
+        trackCustomSafe("QuoteFormEnded", {
+          page: location.pathname
+        });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
