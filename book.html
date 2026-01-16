@@ -58,7 +58,7 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
   <div class="w3-center w3-margin-bottom">
     <div class="w3-bar w3-light-grey w3-round">
       <button class="w3-bar-item w3-button" onclick="selectPackage('carnation')">Carnation</button>
-      <button class="w3-bar-item w3-button" onclick="selectPackage('peony')">Peony</button>
+      <button class="w3-bar-item w3-button" onclick="selectPackage('peony')">Peony (Most Popular)</button>
       <button class="w3-bar-item w3-button" onclick="selectPackage('iris')">Iris</button>
       <button class="w3-bar-item w3-button" onclick="selectPackage('lily')">Lily</button>
       <button class="w3-bar-item w3-button" onclick="selectPackage('orchid')">Orchid</button>
@@ -223,6 +223,17 @@ src="https://www.facebook.com/tr?id=1623673111916243&ev=PageView&noscript=1"
     } catch (e) {}
 
     highlightSelected(pkgKey);
+
+    // Meta Pixel: track package selection
+try {
+  if (typeof fbq === "function") {
+    fbq("trackCustom", "PackageSelected", {
+      package_key: pkgKey,
+      package_label: pkg.label
+    });
+  }
+} catch (e) {}
+
 
     document.getElementById("packageBlurb").innerHTML = pkg.blurbHtml;
 
