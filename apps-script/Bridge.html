@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta name="referrer" content="no-referrer"></head><body>
+<script>
+'use strict';
+(() => {
+  const channel = '<?= channel ?>';
+  const parentOrigin = '<?= parentOrigin ?>';
+  const methods = new Set(['gallery', 'thumbnails', 'photo', 'download']);
+  const send = message => window.top.postMessage({...message, channel}, parentOrigin);
+  window.addEventListener('message', event => {
+    const request = event.data;
+    if (event.source !== window.top || event.origin !== parentOrigin || !request || request.channel !== channel || request.type !== 'mj-request') return;
+    if (!methods.has(request.method) || typeof request.id !== 'string' || request.id.length > 80) return;
+    google.script.run
+      .withSuccessHandler(result => send({type: 'mj-response', id: request.id, result}))
+      .withFailureHandler(() => send({type: 'mj-response', id: request.id, result: {ok: false, error: 'TEMPORARY'}}))
+      .galleryRequest(request.method, request.token, request.payload);
+  });
+  send({type: 'mj-ready'});
+})();
+</script>
+</body></html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Your gallery | Mallory Jane Photography</title>
+  <link rel="icon" href="assets/brand/favicon.png">
+  <link rel="stylesheet" href="gallery.css">
+  <!-- Customer pages deliberately omit analytics and session recording. -->
+  <script src="gallery-config.js" defer></script>
+  <script src="gallery.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="assets/brand/logo.png" alt=""><span>Mallory Jane <small>Photography</small></span></a>
+    <a href="index.html" class="back-link">← Back to the website</a>
+  </header>
+  <main id="main">
+    <section class="intro">
+      <p class="eyebrow">A little moment. Yours to keep.</p>
+      <h1 id="gallery-title">Your photo gallery</h1>
+      <p id="gallery-description">A collection of your favorite people and the moments in between.</p>
+      <p id="gallery-meta" class="gallery-meta"></p>
+    </section>
+    <section id="status-panel" class="status-panel" aria-live="polite">
+      <p id="status-text">Opening your gallery…</p>
+      <button id="retry" type="button" hidden>Try again</button>
+    </section>
+    <section id="gallery-content" hidden aria-label="Your photographs">
+      <div class="toolbar">
+        <p><strong id="photo-count"></strong> <span>photographs, made for you</span></p>
+        <button id="download-collection" type="button" class="primary">Download collection ↓</button>
+      </div>
+      <div id="photo-grid" class="photo-grid"></div>
+      <div class="load-more"><button id="load-more" type="button" hidden>Show more photos</button></div>
+    </section>
+    <aside class="delivery-note"><span aria-hidden="true">♡</span><p>Thank you for letting me be part of your story.<br><small>Keep this link somewhere safe. Anyone you share it with can view and download these photos.</small></p></aside>
+  </main>
+  <footer>With love, Mallory Jane <span>•</span> Photography</footer>
+  <dialog id="viewer" aria-label="Photo viewer">
+    <div class="viewer-toolbar"><p id="viewer-count"></p><button id="close-viewer" type="button" aria-label="Close photo viewer">Close ✕</button></div>
+    <div class="viewer-stage"><button id="previous-photo" type="button" aria-label="Previous photo">‹</button><img id="viewer-image" alt=""><button id="next-photo" type="button" aria-label="Next photo">›</button></div>
+    <div class="viewer-bottom"><div><p id="viewer-name"></p><p id="viewer-status" role="status"></p></div><button id="download-photo" type="button">Download original ↓</button></div>
+  </dialog>
+  <dialog id="downloads" aria-labelledby="downloads-title">
+    <div class="download-heading"><h2 id="downloads-title">Take your memories home.</h2><button id="close-downloads" type="button" aria-label="Close downloads">✕</button></div>
+    <p id="download-description">Your original, full-resolution photographs.</p>
+    <p id="download-progress" role="status"></p>
+    <div id="download-parts" class="download-parts"></div>
+    <p class="small-note">Choose Prepare, then Save when the file is ready. On a phone, your photos may save to the Files or Downloads app.</p>
+  </dialog>
+  <noscript><p class="status-panel">Please enable JavaScript to open your gallery.</p></noscript>
+</body>
+</html>
