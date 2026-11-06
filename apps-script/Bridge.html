@@ -6,13 +6,37 @@
   const channel = '<?= channel ?>';
   const parentOrigin = '<?= parentOrigin ?>';
   const methods = new Set(['gallery', 'thumbnails', 'photo', 'download']);
-  const send = message => window.top.postMessage({...message, channel}, parentOrigin);
+  const send = (message, transfers = []) => window.top.postMessage({...message, channel}, parentOrigin, transfers);
+  function binaryResult(result) {
+    const transfers = [];
+    if (result?.ok) {
+      const items = Array.isArray(result.data) ? result.data : [result.data];
+      for (const item of items) {
+        if (!item || typeof item.base64 !== 'string') continue;
+        let bytes;
+        if (typeof Uint8Array.fromBase64 === 'function') bytes = Uint8Array.fromBase64(item.base64);
+        else {
+          const padding = item.base64.endsWith('==') ? 2 : item.base64.endsWith('=') ? 1 : 0;
+          bytes = new Uint8Array(item.base64.length / 4 * 3 - padding);
+          for (let offset = 0, written = 0; offset < item.base64.length; offset += 65536) {
+            const block = atob(item.base64.slice(offset, offset + 65536));
+            for (let i = 0; i < block.length; i++) bytes[written++] = block.charCodeAt(i);
+          }
+        }
+        delete item.base64; item.bytes = bytes.buffer; transfers.push(bytes.buffer);
+      }
+    }
+    return transfers;
+  }
   window.addEventListener('message', event => {
     const request = event.data;
     if (event.source !== window.top || event.origin !== parentOrigin || !request || request.channel !== channel || request.type !== 'mj-request') return;
     if (!methods.has(request.method) || typeof request.id !== 'string' || request.id.length > 80) return;
     google.script.run
-      .withSuccessHandler(result => send({type: 'mj-response', id: request.id, result}))
+      .withSuccessHandler(result => {
+        try { const transfers = binaryResult(result); send({type: 'mj-response', id: request.id, result}, transfers); }
+        catch { send({type: 'mj-response', id: request.id, result: {ok: false, error: 'TEMPORARY'}}); }
+      })
       .withFailureHandler(() => send({type: 'mj-response', id: request.id, result: {ok: false, error: 'TEMPORARY'}}))
       .galleryRequest(request.method, request.token, request.payload);
   });

@@ -19,7 +19,7 @@ function fixture(count = 3) {
   for (let i = 1; i <= count; i++) files.set(`photo_${i}`, {
     parent:folder.getId(), trashed:false, mime:'image/jpeg', size:100, name:`Photo ${i}.jpg`, bytes:Buffer.from(`original-${i}`),
     getId:()=>`photo_${i}`, getName(){return this.name;}, getSize(){return this.size;}, getMimeType(){return this.mime;},
-    isTrashed(){return this.trashed;}, getParents(){return iterator([{getId:()=>this.parent}]);},
+    isTrashed(){return this.trashed;}, getParents(){return iterator([{getId:()=>this.parent}]);}, getLastUpdated(){return new Date(this.updated || 1735689600000);},
     getThumbnail(){return blob(Buffer.from(`thumbnail-${i}`));}, getBlob(){blobHook(); return blob(this.bytes,this.name,this.mime);}
   });
   const properties = {
@@ -83,6 +83,32 @@ test('original downloads preserve bytes, thumbnails are separate, and missing pr
   assert.equal(Buffer.from(f.call('thumbnails',['photo_1']).data[0].base64,'base64').toString(),'thumbnail-1');
   f.files.get('photo_1').getThumbnail=()=>null;
   assert.equal(f.call('thumbnails',['photo_1']).data[0].base64,null);
+});
+
+test('cached-original validation reads no photo bytes and still enforces access', () => {
+  const f=fixture(); let reads=0; f.hook(()=>reads++);
+  const validate=()=>f.context.galleryRequest('photo',TOKEN,{ids:['photo_1'],validateOnly:true});
+  const result=validate();
+  assert.equal(result.ok,true); assert.equal(result.data.validated,true);
+  assert.equal(result.data.version,1735689600000); assert.equal(result.data.base64,undefined);
+  assert.equal(reads,0);
+  f.files.get('photo_1').parent='different-folder';
+  assert.equal(validate().error,'PHOTO_UNAVAILABLE');
+  delete f.values['gallery:'+hash(TOKEN)];
+  assert.equal(validate().error,'UNAVAILABLE'); assert.equal(reads,0);
+});
+
+test('original is read once and a version change during the read requires a retry', () => {
+  const f=fixture(); let reads=0; f.hook(()=>reads++);
+  assert.equal(f.call('photo',['photo_1']).ok,true); assert.equal(reads,1);
+  f.hook(()=>{f.files.get('photo_1').updated=1735689600001;});
+  assert.equal(f.call('photo',['photo_1']).error,'TEMPORARY');
+});
+
+test('gallery revision changes on refresh without exposing private record keys', () => {
+  const f=fixture(), before=f.call('gallery').data.revision;
+  assert.match(before,/^[a-f0-9]{64}$/);
+  f.publish(); assert.notEqual(f.call('gallery').data.revision,before);
 });
 test('ZIP members have safe unique names, even with duplicate filenames', () => {
   const f=fixture(); f.files.get('photo_1').name='../same.jpg'; f.files.get('photo_2').name='../same.jpg';

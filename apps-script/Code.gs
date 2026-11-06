@@ -35,13 +35,13 @@ function galleryRequest(method, token, payload) {
     if (['gallery', 'thumbnails', 'photo', 'download'].indexOf(method) === -1) fail_('UNAVAILABLE');
     var gallery = authorize_(token);
     if (method === 'gallery') return {ok: true, data: {
-      title: gallery.title, expiresAt: gallery.expiresAt, photos: gallery.photos,
+      title: gallery.title, expiresAt: gallery.expiresAt, photos: gallery.photos, revision: digest_(gallery.prefix),
       maxDownloadBytes: MAX_BYTES_, maxDownloadFiles: 20
     }};
     var ids = payload && payload.ids;
     var maximum = method === 'thumbnails' ? 6 : method === 'photo' ? 1 : 20;
     if (!Array.isArray(ids) || !ids.length || ids.length > maximum || new Set(ids).size !== ids.length) fail_('UNAVAILABLE');
-    var files = ids.map(function(id) { return authorizedFile_(gallery, id); });
+    var files = authorizedFiles_(gallery, ids);
     var data;
     if (method === 'thumbnails') {
       data = files.map(function(file) {
@@ -52,7 +52,23 @@ function galleryRequest(method, token, payload) {
         if (bytes.length > 1024 * 1024 || MIME_TYPES_.indexOf(blob.getContentType()) === -1) return {id: file.getId(), base64: null};
         return {id: file.getId(), mime: blob.getContentType(), base64: Utilities.base64Encode(bytes)};
       });
+    } else if (files.length === 1) {
+      var file = files[0];
+      var version = file.getLastUpdated().getTime();
+      var size = file.getSize();
+      if (size > MAX_BYTES_) fail_('TOO_LARGE');
+      data = {name: safePhotoName_(file.getName(), file.getMimeType()), mime: file.getMimeType(), size: size, version: version};
+      if (method === 'photo' && payload.validateOnly === true) {
+        data.validated = true;
+      } else {
+        // Originals do not need ZIP compression or repeated Blob -> byte copies.
+        var originalBytes = file.getBlob().getBytes();
+        if (originalBytes.length > MAX_BYTES_) fail_('TOO_LARGE');
+        data.base64 = Utilities.base64Encode(originalBytes);
+      }
     } else {
+      // Retain the old small-ZIP method for previously loaded website versions.
+      // The new customer page downloads originals in parallel and streams one ZIP.
       var total = files.reduce(function(sum, file) { return sum + file.getSize(); }, 0);
       if (total > MAX_BYTES_) fail_('TOO_LARGE');
       var actual = 0;
@@ -70,7 +86,8 @@ function galleryRequest(method, token, payload) {
     }
     // Recheck after a long download, including a refresh/revoke while it ran.
     var current = authorize_(token);
-    ids.forEach(function(id) { authorizedFile_(current, id); });
+    var currentFiles = authorizedFiles_(current, ids);
+    if (version !== undefined && currentFiles[0].getLastUpdated().getTime() !== version) fail_('TEMPORARY');
     return {ok: true, data: data};
   } catch (error) {
     // Do not disclose Drive paths, account information, IDs or stack traces.
@@ -101,11 +118,15 @@ function authorize_(token) {
   if (!gallery.photos.length) fail_('UNAVAILABLE');
   return gallery;
 }
+function authorizedFiles_(gallery, ids) {
+  try {
+    if (DriveApp.getFolderById(gallery.folderId).isTrashed()) fail_('PHOTO_UNAVAILABLE');
+  } catch (error) { fail_('PHOTO_UNAVAILABLE'); }
+  return ids.map(function(id) { return authorizedFile_(gallery, id); });
+}
 function authorizedFile_(gallery, id) {
   if (typeof id !== 'string' || !gallery.photos.some(function(photo) { return photo.id === id; })) fail_('PHOTO_UNAVAILABLE');
   try {
-    var folder = DriveApp.getFolderById(gallery.folderId);
-    if (folder.isTrashed()) fail_('PHOTO_UNAVAILABLE');
     var file = DriveApp.getFileById(id);
     if (file.isTrashed() || MIME_TYPES_.indexOf(file.getMimeType()) === -1) fail_('PHOTO_UNAVAILABLE');
     var parents = file.getParents();

@@ -5,14 +5,15 @@ import {readFile, stat} from 'node:fs/promises';
 import {resolve, extname, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
+const assetRoot = process.env.MJ_PREVIEW_ASSET_ROOT ? resolve(process.env.MJ_PREVIEW_ASSET_ROOT) : root;
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.png':'image/png','.jpg':'image/jpeg'};
 const paths = Array.from({length:10}, (_, i) => `assets/portfolio/full/carousel/Carousel${i + 1}.jpg`);
 const images = await Promise.all(paths.map(async (path, index) => {
-  const bytes = await readFile(resolve(root, path));
-  return {id: `demo-${index + 1}`, name: `MJ-${String(index + 1).padStart(3, '0')}.jpg`, mime:'image/jpeg', size:bytes.length, base64:bytes.toString('base64')};
+  const bytes = await readFile(resolve(assetRoot, path));
+  return {id: `demo-${index + 1}`, name: `MJ-${String(index + 1).padStart(3, '0')}.jpg`, mime:'image/jpeg', size:bytes.length, version:1, base64:bytes.toString('base64')};
 }));
-const demoScript = `window.MJ_GALLERY_DEMO = async (method, payload) => {
-  const response = await fetch('/__demo', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,payload})});
+const demoScript = `window.MJ_GALLERY_DEMO = async (method, payload, {signal} = {}) => {
+  const response = await fetch('/__demo', {method:'POST',signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({method,payload})});
   const result = await response.json();
   if (!result.ok) throw Object.assign(new Error(), {code:result.error});
   return result.data;
@@ -33,7 +34,10 @@ const server = http.createServer(async (req, res) => {
         photos:images.map(({base64, ...photo}) => photo), maxDownloadBytes:20 * 1048576, maxDownloadFiles:20
       };
       else if (method === 'thumbnails') data = payload.ids.map(id => images.find(image => image.id === id));
-      else if (['photo','download'].includes(method) && payload.ids.length === 1) data = images.find(image => image.id === payload.ids[0]);
+      else if (['photo','download'].includes(method) && payload.ids.length === 1) {
+        data = images.find(image => image.id === payload.ids[0]);
+        if (payload.validateOnly && data) data = {validated:true,version:data.version,size:data.size};
+      }
       else {
         // Use an actual uncompressed ZIP so demo download behavior is testable.
         const chosen = payload.ids.map(id => images.find(image => image.id === id));
@@ -43,9 +47,10 @@ const server = http.createServer(async (req, res) => {
       res.setHeader('Content-Type','application/json'); res.end(JSON.stringify({ok:true,data})); return;
     }
     let path = decodeURIComponent(url.pathname === '/' ? '/gallery.html' : url.pathname);
-    if (!/^\/(?:assets\/|(?:gallery(?:-config)?\.(?:html|js|css)|index\.html)$)/.test(path)) { res.writeHead(404); res.end('Not found'); return; }
-    const absolute = resolve(root, '.' + path);
-    if (!absolute.startsWith(resolve(root) + sep) || !(await stat(absolute)).isFile()) { res.writeHead(404); res.end(); return; }
+    if (!/^\/(?:assets\/|(?:gallery(?:-config|-downloads)?\.(?:html|js|css)|vendor\/zip\.min\.js|gallery-download\/sw\.js|index\.html)$)/.test(path)) { res.writeHead(404); res.end('Not found'); return; }
+    const servedRoot = path.startsWith('/assets/') ? assetRoot : root;
+    const absolute = resolve(servedRoot, '.' + path);
+    if (!absolute.startsWith(resolve(servedRoot) + sep) || !(await stat(absolute)).isFile()) { res.writeHead(404); res.end(); return; }
     let body = await readFile(absolute);
     if (path === '/gallery.html' && url.searchParams.has('demo')) body = Buffer.from(body.toString().replace('<script src="gallery.js"', '<script src="/__demo.js" defer></script>\n  <script src="gallery.js"'));
     res.setHeader('Content-Type', mime[extname(absolute)] || 'application/octet-stream'); res.end(body);

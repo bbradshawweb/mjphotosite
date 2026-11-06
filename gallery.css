@@ -442,6 +442,32 @@ body:has(dialog[open]) {
   color:var(--dark);
 }
 
+.download-panel {
+  border: 1px solid var(--line);
+  background: #eef0e9;
+  padding: 18px 20px;
+  margin: 0 0 24px;
+  border-radius: 4px;
+}
+
+.download-panel progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  accent-color: var(--dark);
+  margin: 12px 0 18px;
+}
+
+.download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.download-actions button, .download-actions a {
+  font-size: 12px;
+}
+
 @media(min-width:1200px) {
   .photo-grid {
     gap:28px;
