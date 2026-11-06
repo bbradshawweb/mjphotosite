@@ -187,10 +187,19 @@ test('bridge rejects incorrect origin, window, channel and administration method
   for(const mutation of [{origin:'https://evil.example'},{source:{}},{data:{...valid.data,channel:OTHER}},{data:{...valid.data,method:'createGallery_'}}]) receive({...valid,...mutation});
   assert.equal(calls.length,0); receive(valid); assert.equal(calls.length,1); assert.equal(calls[0][1],OTHER);
 });
-test('website transport pins the Google window, nonce and response source; token stays out of URL', async () => {
+for (const credentiallessSupported of [true, false]) test(`website transport isolates supported sessions and pins source/nonce (credentialless: ${credentiallessSupported})`, async () => {
   const elements=new Map(), listeners=new Map(); let iframe;
   const element=()=>({addEventListener(){},remove(){},hidden:false});
-  const document={getElementById:id=>{if(!elements.has(id))elements.set(id,element());return elements.get(id);},createElement:()=>element(),body:{append:frame=>{iframe=frame;}}};
+  const document={getElementById:id=>{if(!elements.has(id))elements.set(id,element());return elements.get(id);},createElement:()=>{
+    const frame=element();
+    if(credentiallessSupported) frame.credentialless=false;
+    Object.defineProperty(frame,'src',{set(value){
+      // Check at navigation, rather than after the cookie-bearing request.
+      assert.equal(frame.credentialless,credentiallessSupported ? true : undefined);
+      this.url=value;
+    },get(){return this.url;}});
+    return frame;
+  },body:{append:frame=>{iframe=frame;}}};
   const window={addEventListener:(name,fn)=>listeners.set(name,fn),removeEventListener:name=>listeners.delete(name)};
   const context=vm.createContext({document,window,location:{hostname:'www.malloryjanephotography.com',search:'',hash:'#'+TOKEN},URL,URLSearchParams,crypto:webcrypto,setTimeout,clearTimeout});
   vm.runInContext(clientCode.replace('  start();','  window.testApi = {connect, googleOrigin};'),context);

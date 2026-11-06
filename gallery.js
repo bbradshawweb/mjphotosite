@@ -68,6 +68,11 @@
       endpoint.searchParams.set('origin', location.origin);
       const frame = document.createElement('iframe');
       frame.hidden = true; frame.title = 'Private photo connection'; frame.referrerPolicy = 'no-referrer';
+      // The endpoint runs as its owner and permits anonymous visitors. In
+      // supporting browsers, isolate this frame (including Google's nested
+      // frame/RPC) from the visitor's Google sign-in cookies and storage.
+      // Set this before src so the first navigation uses the empty session.
+      if ('credentialless' in frame) frame.credentialless = true;
       let source, origin, sequence = 0;
       const pending = new Map();
       const startup = setTimeout(() => {

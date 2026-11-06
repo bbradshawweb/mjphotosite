@@ -52,7 +52,7 @@ const server = http.createServer(async (req, res) => {
     const absolute = resolve(servedRoot, '.' + path);
     if (!absolute.startsWith(resolve(servedRoot) + sep) || !(await stat(absolute)).isFile()) { res.writeHead(404); res.end(); return; }
     let body = await readFile(absolute);
-    if (path === '/gallery.html' && url.searchParams.has('demo')) body = Buffer.from(body.toString().replace('<script src="gallery.js"', '<script src="/__demo.js" defer></script>\n  <script src="gallery.js"'));
+    if (path === '/gallery.html' && url.searchParams.has('demo')) body = Buffer.from(body.toString().replace(/<script src="gallery\.js(?:\?[^"<>]*)?"/, match => '<script src="/__demo.js" defer></script>\n  ' + match));
     res.setHeader('Content-Type', mime[extname(absolute)] || 'application/octet-stream'); res.end(body);
   } catch { res.writeHead(400, {'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false,error:'TEMPORARY'})); }
 });

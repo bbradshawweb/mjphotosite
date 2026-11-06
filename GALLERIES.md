@@ -69,6 +69,14 @@ No customer needs to sign into Google. The owner must authorize and deploy the s
 
 If a Google error page or a sign-in prompt appears instead of loading photos, first verify the deployment is `/exec`, **Me / Anyone**, and the configured website origin matches. Test using a signed-out browser. Do not solve an embedding/authentication error by sharing the Drive folder publicly.
 
+### Normal Chrome fails while Incognito works
+
+If a hard refresh also fails, Google sign-in/session state is a possible cause. Google documents that [multiple signed-in Google accounts are unsupported by Apps Script web apps](https://developers.google.com/apps-script/guides/support/troubleshooting#issues_with_multiple_google_accounts).
+
+The gallery sets `credentialless` on its Google connection frame before navigation when supported. Chrome loads that frame and its nested Google frames with an empty, temporary cookie/storage context, independent of the customer's signed-in accounts. The endpoint still runs as the owner; the secret-link authorization and origin/source/nonce checks remain required. See [Chrome's description of credentialless frames](https://developer.chrome.com/blog/iframe-credentialless). Browsers without this capability retain the existing connection behavior.
+
+This connection update only requires pushing the website changes; no Apps Script redeployment is needed. The script URL in `gallery.html` is versioned to avoid reusing the previous cached script. After publishing, test the same customer link in the affected normal Chrome profile, including previews and a download. Automated transport tests verify isolation is enabled before navigation and that the secure handshake still works, but do not reproduce an actual signed-in Chrome session. Browser extensions or policies can also block the connection and require separate diagnosis if the problem persists.
+
 ## Release and rollback
 
 There is no automatic release step in this work. The repository's owner controls the push that publishes the website:
